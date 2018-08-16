@@ -12,3 +12,8 @@ routes-demo
 /routes/admin-demo.js
 /bin/www
 /public - 副本
+/www/download
+/www/update
+/www/upload
+/app - 副本.js
+/app-demo.js
