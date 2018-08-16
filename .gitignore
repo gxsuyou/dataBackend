@@ -5,10 +5,10 @@ routes-demo
 .idea
 /views/demo-1
 /views
-/www
 /routes/adminStrategy1.js
 /DAO/common-demo.js
 /DAO/admin-demo.js
 /DAO/page-demo.js
 /routes/admin-demo.js
 /bin/www
+/public - 副本
