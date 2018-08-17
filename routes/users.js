@@ -51,6 +51,20 @@ router.get('/getUserList',function(req,res,next){
         }
     })
 });
+
+// 登录
+router.get('/login',function(req,res,next){
+    var data=req.query;
+    if(data.name && data.psd){
+         user.login(data.name,data.psd,function(result){
+            if(result.length){
+                res.json({state:1});
+            }else{
+                res.json({state:0});
+            }
+        })
+    }
+});
 // router.get("/edit");
 module.exports = router;
 
