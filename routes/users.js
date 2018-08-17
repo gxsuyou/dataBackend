@@ -131,7 +131,6 @@ router.get('/getLoginNum',function(req,res,next){
                     result.splice(i,1);
                 }
             }
-            console.log(result);
             var arr=[];
             for(var i=1;i<=12;i++){
                 if(i<10){
