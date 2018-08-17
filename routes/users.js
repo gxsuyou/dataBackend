@@ -44,7 +44,17 @@ Date.prototype.Format = function(formatStr)
 // 获取APP用户
 router.get('/getUserList',function(req,res,next){
     user.getUserList(function(result){
-        if(result.length){
+        if(result.length){s
+            for(var i=0;i<result.length;i++){
+                var time=result[i].time_logon;
+                var y = time.getFullYear();
+                var m = time.getMonth()+1;
+                var d = time.getDate();
+                var h = time.getHours();
+                var mm = time.getMinutes();
+                var s = time.getSeconds();
+                result[i].time_logon=y+'-'+m+'-'+'-d'+''+h+':'+mm':'+s;
+            }
             res.json({state:1,userList:result});
         }else{
             res.json({state:0});
@@ -53,8 +63,8 @@ router.get('/getUserList',function(req,res,next){
 });
 
 // 登录
-router.get('/login',function(req,res,next){
-    var data=req.query;
+router.post('/login',function(req,res,next){
+    var data=req.body;
     if(data.name && data.psd){
          user.login(data.name,data.psd,function(result){
             if(result.length){
