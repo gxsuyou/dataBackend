@@ -23,8 +23,17 @@
 </head>
 
 <script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/common/js/cookie/jquery.cookie.js"></script>
+<script src="assets/common/js/public.js"></script>
+
 <script>
-    $(function () {
+    $(document).ready(function () {//一开始就执行查询cookie是否在登录状态
+        if (!getCookie("id") && !getCookie("name") && !getCookie("comment")) {
+            window.location.href = "login.html";
+        } else {
+            $(".admin-username").text(getCookie("name"))
+        }
+
         $(".nav li").click(function () {
             // console.log(1)
             $(".nav li").find("a").removeClass("active");
@@ -41,6 +50,18 @@
                 }
             });
         })
+
+        $(".admin_logout").click(function () {//退出登录
+            if (!getCookie("id") && !getCookie("name") && !getCookie("comment")) {
+                window.location.href = "login.html";
+            } else {
+                delCookie("id")
+                delCookie("name")
+                delCookie("comment")
+                window.location.href = "login.html";
+            }
+        })
+
     })
 </script>
 <body>
@@ -69,45 +90,48 @@
             </div>
             <div id="navbar-menu">
                 <ul class="nav navbar-nav navbar-right">
+                    <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">-->
+                    <!--<i class="lnr lnr-alarm"></i>-->
+                    <!--<span class="badge bg-danger">5</span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu notifications">-->
+                    <!--<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space-->
+                    <!--is almost full</a></li>-->
+                    <!--<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9-->
+                    <!--unfinished tasks</a></li>-->
+                    <!--<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report-->
+                    <!--is available</a></li>-->
+                    <!--<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting-->
+                    <!--in 1 hour</a></li>-->
+                    <!--<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request-->
+                    <!--has been approved</a></li>-->
+                    <!--<li><a href="#" class="more">See all notifications</a></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i-->
+                    <!--class="lnr lnr-question-circle"></i> <span>帮助</span> <i-->
+                    <!--class="icon-submenu lnr lnr-chevron-down"></i></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="#">Basic Use</a></li>-->
+                    <!--<li><a href="#">Working With Data</a></li>-->
+                    <!--<li><a href="#">Security</a></li>-->
+                    <!--<li><a href="#">Troubleshooting</a></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                            <i class="lnr lnr-alarm"></i>
-                            <span class="badge bg-danger">5</span>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="assets/img/user.png" class="img-circle" alt="Avatar">
+                            <span class="admin-username"></span>
+                            <i class="icon-submenu lnr lnr-chevron-down"></i>
                         </a>
-                        <ul class="dropdown-menu notifications">
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space
-                                is almost full</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
-                                unfinished tasks</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report
-                                is available</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting
-                                in 1 hour</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request
-                                has been approved</a></li>
-                            <li><a href="#" class="more">See all notifications</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                class="lnr lnr-question-circle"></i> <span>帮助</span> <i
-                                class="icon-submenu lnr lnr-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Basic Use</a></li>
-                            <li><a href="#">Working With Data</a></li>
-                            <li><a href="#">Security</a></li>
-                            <li><a href="#">Troubleshooting</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                                                                                        class="img-circle" alt="Avatar">
-                            <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-                            <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-                            <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-                            <li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                            <li><a href="javascript:void(0);"><i class="lnr lnr-user"></i> <span>个人信息</span></a></li>
+                            <!--<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>-->
+                            <!--<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>-->
+                            <li class="admin_logout"><a href="javascript:void(0);"><i class="lnr lnr-exit"></i> <span>退出登录</span></a>
+                            </li>
                         </ul>
                     </li>
                     <!-- <li>
@@ -127,35 +151,35 @@
                         <i class="lnr lnr-home"></i>
                         <span>首页</span></a></li>
                     <li><a href="javascript:void(0);" data-href="/user/user-lists.html" class="" target="_self">
-                        <i class="lnr lnr-chart-bars"></i>
+                        <i class="lnr lnr-dice"></i>
                         <span>用户</span></a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" data-href="#subPages" data-toggle="collapse" class="collapsed">
-                            <i class="lnr lnr-file-empty"></i>
-                            <span>Pages</span>
-                            <i class="icon-submenu lnr lnr-chevron-left"></i>
-                        </a>
-                        <div id="subPages" class="collapse ">
-                            <ul class="nav">
-                                <li>
-                                    <a href="javascript:void(0);" data-href="page-profile.html" class="">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" data-href="page-login.html" class="">Login</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" data-href="page-lockscreen.html"
-                                       class="">Lockscreen</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" data-href="tables.html" class="" target="_self">
-                            <i class="lnr lnr-dice"></i> <span>表格</span>
-                        </a>
-                    </li>
+                    <!--<li>-->
+                    <!--<a href="javascript:void(0);" data-href="#subPages" data-toggle="collapse" class="collapsed">-->
+                    <!--<i class="lnr lnr-file-empty"></i>-->
+                    <!--<span>Pages</span>-->
+                    <!--<i class="icon-submenu lnr lnr-chevron-left"></i>-->
+                    <!--</a>-->
+                    <!--<div id="subPages" class="collapse ">-->
+                    <!--<ul class="nav">-->
+                    <!--<li>-->
+                    <!--<a href="javascript:void(0);" data-href="page-profile.html" class="">Profile</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a href="javascript:void(0);" data-href="page-login.html" class="">Login</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a href="javascript:void(0);" data-href="page-lockscreen.html"-->
+                    <!--class="">Lockscreen</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a href="javascript:void(0);" data-href="tables.html" class="" target="_self">-->
+                    <!--<i class="lnr lnr-dice"></i> <span>表格</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
 
                 </ul>
             </nav>
@@ -180,4 +204,4 @@
     <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="assets/scripts/klorofil-common.js"></script>
-    <!--<script src="assets/js/index.js"></script>-->
+    <script src="assets/common/js/page.js"></script>

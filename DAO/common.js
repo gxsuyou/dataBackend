@@ -42,7 +42,7 @@ var common = {
         // var pa = parseFloat(req.query.pa);
 
         if (p > 0) {
-            nextPage = p + 1;
+            nextPage = Number(p) + 1;
             prevPage = p - 1;
             if (p <= 1) {
                 prevPage = 1;
@@ -54,7 +54,8 @@ var common = {
 
         if (p > 10) {
             min_page = p;
-            max_page = p + 9;
+            max_page = Number(p) + 9;
+            console.log(max_page);
         }
         page.getPage(tables, p, p_num, where, sqlType, field, function (result) {
             sizeCount = result.count;
