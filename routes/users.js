@@ -44,17 +44,7 @@ Date.prototype.Format = function(formatStr)
 // 获取APP用户
 router.get('/getUserList',function(req,res,next){
     user.getUserList(function(result){
-        if(result.length){s
-            for(var i=0;i<result.length;i++){
-                var time=result[i].time_logon;
-                var y = time.getFullYear();
-                var m = time.getMonth()+1;
-                var d = time.getDate();
-                var h = time.getHours();
-                var mm = time.getMinutes();
-                var s = time.getSeconds();
-                result[i].time_logon=y+'-'+m+'-'+'-d'+''+h+':'+mm':'+s;
-            }
+        if(result.length){
             res.json({state:1,userList:result});
         }else{
             res.json({state:0});
@@ -68,6 +58,20 @@ router.post('/login',function(req,res,next){
     if(data.name && data.psd){
          user.login(data.name,data.psd,function(result){
             if(result.length){
+                res.json({state:1});
+            }else{
+                res.json({state:0});
+            }
+        })
+    }
+});
+
+router.get('/addNum',function(req,res,next){
+    var data=req.body;
+    var time=new Date().getTime();
+    if(data.uid){
+        user.addNum(data.uid,time,function(result){
+            if(result.insertId){
                 res.json({state:1});
             }else{
                 res.json({state:0});
