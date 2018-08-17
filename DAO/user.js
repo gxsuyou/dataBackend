@@ -20,9 +20,10 @@ var user = {
         })
     },
 
-    addNum:function(uid,time,callback){
-        var sql="insert into t_login_num(uid,login_time) values(?,?)";
-        query(sql,[uid,time],function(result){
+    // 获取用户登录数量
+    getLoginNum:function(callback){
+        var sql="select FROM_UNIXTIME(login_time,'%Y-%m-%d') as login_time from t_login_num";
+        query(sql,[],function(result){
             return callback(result);
         })
     },
