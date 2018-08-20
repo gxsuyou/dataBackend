@@ -2,33 +2,7 @@
 <div class="main">
     <link rel="stylesheet" href="./assets/common/css/user-lists.css">
     <style>
-        .pages {
-            float: left;
-            width: 100%;
-            position: relative;
-            top: -40px;
-        }
 
-        .pages-div li {
-            float: left;
-            margin-right: 8px;
-        }
-
-        .pages-div li a {
-            float: left;
-            width: 23px;
-            height: 28px;
-            text-align: center;
-            line-height: 28px;
-            border: 1px solid #999;
-            color: #666;
-            border-radius: 6px;
-        }
-
-        .pages-div li.prev a,
-        .pages-div li.next a {
-            width: 60px;
-        }
     </style>
     <!-- MAIN CONTENT -->
     <div class="main-content">
@@ -82,6 +56,7 @@
                     </div>
                     <!-- END BASIC TABLE -->
                 </div>
+                <div id="loading" style="width: 98%; position: absolute; text-align: center; top: 48%"></div>
             </div>
         </div>
     </div>
@@ -111,9 +86,13 @@
             type: "get",
             url: url,
             data: data,
+            timeout: 15000,
+            beforeSend: function (XMLHttpRequest) {
+                //alert('远程调用开始...');
+                $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+            },
             success: function (msg) {
                 var users = msg.result;
-                console.log(msg);
                 var html = ""
                 for (var i in users) {
                     var sortNum = Number(i) + 1;
@@ -136,23 +115,81 @@
                 html += "<input type='hidden' id='url' value='" + url + "'/>"
                 $(".uLists").append(html);
 
-                pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url)
+                pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url);
 
+                getPages()
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                // alert('远程调用成功，状态文本值：'+textStatus);
+                $("#loading").empty();
             }
         })
 
+        function getPages() {
+            $(".pages-div li").on("click", function () {
 
-        $(".pages-div li").click(function () {
-            var page = $(this).find("a").attr("data-num");
-            $.ajax({
-                type: "get",
-                url: url,
-                data: {p: page},
-                success: function (msg) {
+                var page = $(this).find("a").attr("data-num");
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    data: {p: page},
+                    timeout: 15000,
+                    beforeSend: function (XMLHttpRequest) {
+                        //alert('远程调用开始...');
+                        $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                    },
+                    success: function (msg) {
+                        var users = msg.result;
+                        var html = ""
+                        for (var i in users) {
+                            var sortNum = Number(i) + 1;
+                            html += "<tr>";
+                            html += "<td>" + sortNum + "</td>";
+                            html += "<td>" + users[i].id + "</td>";
+                            html += "<td>" + users[i].nick_name + "</td>";
+                            if (users[i].sex == 1) {
+                                html += "<td>男</td>";
+                            } else if (users[i].sex == 2) {
+                                html += "<td>女</td>";
+                            } else {
+                                html += "<td>保密</td>";
+                            }
+                            html += "<td>" + users[i].tel + "</td>";
+                            html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
+                            html += "<td>--/--</td>";
+                            html += "</tr>";
+                        }
+                        html += "<input type='hidden' id='url' value='" + url + "'/>"
+                        $(".uLists").empty()
+                        $(".uLists").append(html)
 
-                }
+                        pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url);
+
+                        getPages()
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // alert('远程调用成功，状态文本值：'+textStatus);
+                        $("#loading").empty();
+                    }
+                })
             })
-        })
+        }
+
+        // pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url)
+        //
+        // $(".pages-div li").click(function () {
+        //     alert(111)
+        //     var url = url;
+        //     // var page = $(this).find("a").attr("data-num");
+        //     // $.ajax({
+        //     //     type: "get",
+        //     //     url: url,
+        //     //     data: {p: page},
+        //     //     success: function (msg) {
+        //     //
+        //     //     }
+        //     // })
+        // })
 
     })
 </script>

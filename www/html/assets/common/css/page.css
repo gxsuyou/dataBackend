@@ -1,0 +1,33 @@
+.pages {
+    float: left;
+    width: 100%;
+    position: relative;
+    top: -40px;
+}
+
+.pages-div li {
+    float: left;
+    margin-right: 8px;
+}
+
+.pages-div li a {
+    float: left;
+    width: 23px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    border: 1px solid #999;
+    color: #666;
+    border-radius: 6px;
+}
+
+.pages-div li a.page-active {
+    border: 1px solid #00AAFF;
+    color: white;
+    background-color: #00AAFF;
+}
+
+.pages-div li.prev a,
+.pages-div li.next a {
+    width: 60px;
+}
