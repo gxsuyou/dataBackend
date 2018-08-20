@@ -36,17 +36,4 @@ function pages(totalPage, max_page, firstPage, nextPage, prevPage, nowPage, url)
 
     $(".pages-div ul").append(page);
 
-
-    $(".pages-div li").click(function () {
-        var url = url;
-        var page = $(this).find("a").attr("data-num");
-        $.ajax({
-            type: "get",
-            url: url,
-            data: {p: page},
-            success: function (msg) {
-
-            }
-        })
-    })
 }

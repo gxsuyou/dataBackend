@@ -104,7 +104,7 @@
 <script>
     $(function () {
         var data = {
-            p: 11,
+            p: 1,
         }
         var url = config.data + "users/getUserList";
         $.ajax({
@@ -139,6 +139,19 @@
                 pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url)
 
             }
+        })
+
+
+        $(".pages-div li").click(function () {
+            var page = $(this).find("a").attr("data-num");
+            $.ajax({
+                type: "get",
+                url: url,
+                data: {p: page},
+                success: function (msg) {
+
+                }
+            })
         })
 
     })
