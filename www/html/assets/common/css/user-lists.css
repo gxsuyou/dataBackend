@@ -1,0 +1,15 @@
+ul{
+    list-style-type: none;
+}
+
+@media (min-width: 992px) {
+    .col-md-6.user-list {
+        width: 100%;
+    }
+}
+
+.table {
+    margin-bottom: 40px;
+}
+
+
