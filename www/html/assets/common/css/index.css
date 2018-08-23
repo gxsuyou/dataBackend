@@ -1,0 +1,124 @@
+.user_reg, .user_log {
+    width: 15px;
+    height: 15px;
+    background-color: #028fd0;
+    float: right;
+    margin-top: 3px;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+.user_log {
+    background-color: #5cb85c;
+}
+
+@media (min-width: 992px) {
+    .index-user {
+        width: 33% !important;
+    }
+}
+
+.data-times {
+    width: 100%;
+    min-height: 40px;
+    margin-bottom: 10px;
+    border-top: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F0F0F0;
+    -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.time-title {
+    display: inline-block;
+    font-size: 14px;
+    padding: 3px 5px;
+
+}
+
+.time-btn-checked {
+    display: inline-block;
+}
+
+.time-btn-checked a {
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+    color: white;
+    text-align: center;
+    line-height: 25px;
+    border: 1px solid #00a0f0;
+    background-color: #00AAFF;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.time-right {
+    display: inline-block;
+    position: absolute;
+    right: 30px;
+}
+
+.time-right button {
+    border: none;
+    background: none;
+    outline: none;
+    margin-top: 1px;
+}
+
+.time-y, .time-m {
+    display: inline-block;
+    min-width: 100px;
+    padding-left: 15px;
+}
+
+.time-y-c,
+.time-m-c,
+.time-if-checked,
+.icon-checkde {
+    display: inline-block;
+}
+
+.time-y-c, .time-m-c {
+    width: 80px;
+}
+
+.icon-checkde img {
+    display: inline-block;
+    width: 20px;
+}
+
+.time-y-list, .time-m-list {
+    display: inline-block;
+    width: 100%;
+}
+
+.time-y-list ul, .time-m-list ul {
+    list-style-type: none;
+}
+
+.time-y-list li, .time-m-list li {
+    display: inline-block;
+}
+
+.time-y-list li a, .time-m-list li a {
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+    margin-right: 10px;
+    margin-top: 5px;
+    text-align: center;
+    line-height: 25px;
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+    color: #999;
+}
+
+.lock {
+    background: #f2f2f2;
+}
+
+.time-active {
+    background: #00AAFF;
+    color: white !important;
+}

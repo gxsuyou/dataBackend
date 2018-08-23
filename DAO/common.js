@@ -39,6 +39,7 @@ var common = {
         var prevPage = 1;
         var max_page = 10;
         var min_page = 1;
+        var totalUser = 0;
         // var pa = parseFloat(req.query.pa);
 
         if (p > 0) {
@@ -60,6 +61,7 @@ var common = {
         page.getPage(tables, p, p_num, where, sqlType, field, function (result) {
             sizeCount = result.count;
             if (sizeCount > 0) {
+                totalUser = sizeCount;
                 pageCount = sizeCount % p_num == 0 ? sizeCount / p_num : sizeCount / p_num + 1;
                 pageCount = parseInt(pageCount);
                 if (pageCount < p) {
@@ -82,7 +84,8 @@ var common = {
                     totalPage: pageCount,
                     // page_num: page_num,
                     min_page: min_page,
-                    max_page: max_page
+                    max_page: max_page,
+                    totalUser: totalUser,
                 };
                 // res.json(arr);
                 return callback(arr);

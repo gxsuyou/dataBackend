@@ -15,6 +15,7 @@ var config = {
     // url_upload: "https://admin.oneyouxi.com.cn/",
     // url_upload: "http://192.168.0.207:8878/",
 }
+
 var myDate = new Date();
 myDate.getYear();        //获取当前年份(2位)
 myDate.getFullYear();    //获取完整的年份(4位,1970-????)
@@ -31,12 +32,16 @@ var mytime = myDate.toLocaleTimeString();     //获取当前时间
 myDate.toLocaleString();        //获取日期与时间
 
 /*获取一个月的天数 */
-function getCountDays() {
+function getCountDays(getMonth = 0) {
     var curDate = new Date();
-    /* 获取当前月份 */
+    /* 默认获取当前月份 */
     var curMonth = curDate.getMonth();
+
+    if (getMonth > 0) {
+        curMonth = Number(getMonth) - 1;//因为获取到的是实际的月份因此要减1后再加1
+    }
     /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-    curDate.setMonth(curMonth + 1);
+    curDate.setMonth(Number(curMonth) + 1);
     /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
     curDate.setDate(0);
     /* 返回当月的天数 */

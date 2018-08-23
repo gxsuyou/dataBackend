@@ -29,7 +29,7 @@ var user = {
     },
     // 获取用户登录数量
     getLoginNum: function (callback) {
-        var sql = "select FROM_UNIXTIME(login_time,'%Y-%m-%d') as login_time from t_login_num";
+        var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log WHERE type=2";
         query(sql, [], function (result) {
             return callback(result);
         })
