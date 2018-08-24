@@ -135,8 +135,9 @@
                     data: {p: page},
                     timeout: 15000,
                     beforeSend: function (XMLHttpRequest) {
-                        //alert('远程调用开始...');
-                        $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                        // //alert('远程调用开始...');
+                        // $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                        layer.load(2);
                     },
                     success: function (msg) {
                         var users = msg.result;
@@ -168,8 +169,9 @@
                         getPages()
                     },
                     complete: function (XMLHttpRequest, textStatus) {
+                        layer.closeAll('loading');
                         // alert('远程调用成功，状态文本值：'+textStatus);
-                        $("#loading").empty();
+                        // $("#loading").empty();
                     }
                 })
             })

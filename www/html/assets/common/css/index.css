@@ -36,11 +36,11 @@
 
 }
 
-.time-btn-checked {
+.time-btn-checked, .time-btn-reset {
     display: inline-block;
 }
 
-.time-btn-checked a {
+.time-btn-checked a, .time-btn-reset a {
     display: inline-block;
     width: 60px;
     height: 25px;
@@ -51,6 +51,11 @@
     background-color: #00AAFF;
     font-size: 14px;
     border-radius: 4px;
+}
+
+.time-btn-reset a {
+    border: 1px solid #999;
+    background-color: #999;
 }
 
 .time-right {

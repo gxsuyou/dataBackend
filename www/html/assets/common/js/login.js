@@ -1,6 +1,10 @@
 $(".btn-block").click(function () {
     var username = $("#signin-email").val();
     var password = $("#signin-password").val();
+    if (!username || !password) {
+        layer.msg('请输入用户名/密码');
+        return false;
+    }
     var url = config.data + "users/login"
     $.ajax({
         type: "POST",
@@ -17,12 +21,13 @@ $(".btn-block").click(function () {
                 setCookie("comment", user.comment, 7);
 
                 window.location.href = "main.html"
-            } else if (data.code == 2) {
-                alert('帐号/密码不正确');
-                return false
+            } else {
+                layer.msg('用户名/密码不正确');
+                return false;
             }
         }, error(msg) {
-            alert('网络错误！');
+            layer.msg('网络错误');
+            return false
         }
     })
 })

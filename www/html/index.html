@@ -4,6 +4,29 @@
         .ct-series-b .ct-point, .ct-series-b .ct-line, .ct-series-b .ct-bar, .ct-series-b .ct-slice-donut {
             stroke: #5cb85c;
         }
+
+        .info-label span {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .info-label i {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-left: 10px;
+            border-radius: 50%;
+            position: relative;
+            top: 2px;
+        }
+
+        .t-u-b {
+            background-color: #028fd0;
+        }
+
+        .t-u-g {
+            background-color: #5cb85c;
+        }
     </style>
     <link rel="stylesheet" href="./assets/common/css/index.css">
     <!-- MAIN CONTENT -->
@@ -70,6 +93,7 @@
                                 </div>
                                 <input type="hidden" value="1" class="time-sort">
                                 <div class="time-btn-checked"><a href="javascript:void(0)">查询</a></div>
+                                <div class="time-btn-reset"><a href="javascript:void(0)">重置</a></div>
 
                                 <div class="time-right">
                                     <button type="button" class="time-btn-toggle">
@@ -86,24 +110,47 @@
                     </div>
                     <div class="row">
                         <div class="col-md-9" style="position: relative">
-                            <div id="headline-chart" class="ct-chart"></div>
+                            <div id="headline-chart" class="ct-chart" style="height: 305px;"></div>
                             <div id="loading"
                                  style="width: 98%; position: absolute; text-align: center; top: 30%"></div>
                         </div>
                         <div class="col-md-3">
-                            <div class="weekly-summary text-right">
+                            <div class="weekly-summary text-right" style="margin-bottom: 15px">
                                 <span class="number user_reg"></span>
-                                <!--<span class="percentage">-->
-                                <!--<i class="fa fa-caret-up text-success"></i> 12%-->
-                                <!--</span>-->
                                 <span class="info-label">用户注册数</span>
                             </div>
                             <div class="weekly-summary text-right">
                                 <span class="number user_log"></span>
-                                <!--<span class="percentage">-->
-                                <!--<i class="fa fa-caret-up text-success"></i> 23%-->
-                                <!--</span>-->
                                 <span class="info-label">用户活跃数</span>
+                            </div>
+                            <div class="weekly-summary text-right" style="margin-bottom: 0">
+                                <span class="info-label">每周注册/活跃人数</span>
+                            </div>
+                            <div class="weekly-summary text-right">
+                                <div class="info-label">第一周（人）：
+                                    <i class="t-u-b"></i>
+                                    <span class="t_z_user t-1-user1">0</span>
+                                    <i class="t-u-g"></i>
+                                    <span class="t_z_user t-1-user2">0</span>
+                                </div>
+                                <div class="info-label">第二周（人）：
+                                    <i class="t-u-b"></i>
+                                    <span class="t_z_user t-2-user1">0</span>
+                                    <i class="t-u-g"></i>
+                                    <span class="t_z_user t-2-user2">0</span>
+                                </div>
+                                <div class="info-label">第三周（人）：
+                                    <i class="t-u-b"></i>
+                                    <span class="t_z_user t-3-user1">0</span>
+                                    <i class="t-u-g"></i>
+                                    <span class="t_z_user t-3-user2">0</span>
+                                </div>
+                                <div class="info-label">最后（人）：
+                                    <i class="t-u-b"></i>
+                                    <span class="t_z_user t-4-user1">0</span>
+                                    <i class="t-u-g"></i>
+                                    <span class="t_z_user t-4-user2">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -237,7 +284,7 @@
                 console.log(years[i])
                 active = "time-active"
             }
-            div_y += "<li><a href='javascript:void(0)' data-year='" + years[i] + "' class='" + active + "'>" + years[i] + "</a></li>"
+            div_y += "<li><a href='javascript:void(0)' data-year='" + years[i] + "' class='" + active + " y-" + years[i] + "'>" + years[i] + "</a></li>"
         }
         div_y += "<ul>"
 
@@ -249,7 +296,7 @@
                 console.log(month[i2])
                 active = "time-active"
             }
-            div_m += "<li><a href='javascript:void(0)' data-month='" + month[i2] + "' class='" + active + " lock'>" + month[i2] + "</a></li>"
+            div_m += "<li><a href='javascript:void(0)' data-month='" + month[i2] + "' class='" + active + " lock m-" + month[i2] + "'>" + month[i2] + "</a></li>"
         }
         div_m += "<ul>"
 
@@ -301,65 +348,80 @@
             if (i > day) break;
             labels.push(i)
         }
-        var url = config.data + "users/getUserNum";
-        var getYear = myDate.getFullYear();
-        var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
-        var getDate = getYear + "-0" + getMonth;//yyyy-MM如：2018-08
-        var count = {
-            sort: 1,
-            last_time: getDate
-        };
 
-        $(".time-y-val").text(getYear);
-        $(".time-m-val").text("0" + getMonth);
+        startAjax();
 
-        $.ajax({
-            type: "get",
-            url: url,
-            data: count,
-            beforeSend: function (XMLHttpRequest) {
-                //alert('远程调用开始...');
-                $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-            },
-            success: function (msg) {
-                $(".number.user_register").text(msg.gnum)
-                var arr = msg.userNum
-                $.ajax({
-                    type: "get",
-                    url: config.data + "users/getLoginNum",
-                    data: count,
-                    success: function (msg2) {
-                        $(".number.user_login").text(msg2.gnum)
-                        var arr2 = msg2.loginNum
-                        data = {
-                            labels: labels,
-                            series: [
-                                arr,
-                                arr2,
-                            ]
-                        };
+        function startAjax() {
+            var url = config.data + "users/getUserNum";
+            var getYear = myDate.getFullYear();
+            var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
+            var getDate = getYear + "-0" + getMonth;//yyyy-MM如：2018-08
+            var count = {
+                sort: 1,
+                last_time: getDate
+            };
 
-                        options = {
-                            height: 300,
-                            // showArea: true,
-                            // showLine: false,
-                            // showPoint: false,
-                            fullWidth: true,
-                            axisX: {
-                                showGrid: false
-                            },
-                            lineSmooth: false,
-                        };
+            $(".time-y-val").text(getYear);
+            $(".time-m-val").text("0" + getMonth);
 
-                        new Chartist.Line('#headline-chart', data, options);
-                    },
-                })
-            },
-            complete: function (XMLHttpRequest, textStatus) {
-                // alert('远程调用成功，状态文本值：'+textStatus);
-                $("#loading").empty();
-            }
-        });
+            $.ajax({
+                type: "get",
+                url: url,
+                data: count,
+                beforeSend: function (XMLHttpRequest) {
+                    //alert('远程调用开始...');
+                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                },
+                success: function (msg) {
+                    console.log(msg)
+                    $(".number.user_register").text(msg.gnum)
+                    $(".t-1-user1").text(msg.fnum);
+                    $(".t-2-user1").text(msg.snum);
+                    $(".t-3-user1").text(msg.tnum);
+                    $(".t-4-user1").text(msg.fournum);
+                    var arr = msg.userNum
+                    $.ajax({
+                        type: "get",
+                        url: config.data + "users/getLoginNum",
+                        data: count,
+                        success: function (msg2) {
+                            console.log(msg2)
+                            $(".number.user_login").text(msg2.gnum)
+                            $(".t-1-user2").text(msg2.fnum);
+                            $(".t-2-user2").text(msg2.snum);
+                            $(".t-3-user2").text(msg2.tnum);
+                            $(".t-4-user2").text(msg2.fournum);
+                            var arr2 = msg2.loginNum
+                            data = {
+                                labels: labels,
+                                series: [
+                                    arr,
+                                    arr2,
+                                ]
+                            };
+
+                            options = {
+                                height: 300,
+                                // showArea: true,
+                                // showLine: false,
+                                // showPoint: false,
+                                fullWidth: true,
+                                axisX: {
+                                    showGrid: false
+                                },
+                                lineSmooth: false,
+                            };
+
+                            new Chartist.Line('#headline-chart', data, options);
+                        },
+                    })
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // alert('远程调用成功，状态文本值：'+textStatus);
+                    $("#loading").empty();
+                }
+            });
+        }
 
         var userUrl = config.data + "users/getUserList";
         $.ajax({
@@ -412,7 +474,7 @@
         $(".time-m-list li").on("click", function () {
             var isLock = $(".time-m-list li").find("a").is('.lock')
             if (isLock) {
-                alert("当前月份不可选");
+                layer.msg("当前月份不可选");
                 return false;
             }
             var this_month = $(this).find("a").attr("data-month")
@@ -424,19 +486,20 @@
 
 
         $(".time-btn-checked a").on("click", function () {
-            var sort = $(".time-sort").val()
+            var sort = $(".time-sort").val();
             var year = $(".time-y-val").text();
             var month = $(".time-m-val").text();
             var dataTime = year + "-" + month
             if (sort == 1) {
                 if (!month) {
-                    alert("请选择查看的月份")
+                    layer.msg("请选择查看的月份");
+                    return false;
                 }
             } else {
                 dataTime = year;
                 if (month) {
-                    alert("当前只查年度");
-                    return
+                    layer.msg("当前只查年度");
+                    return false
                 }
             }
             var dataArr = {
@@ -454,7 +517,10 @@
                 success: function (msg) {
                     var arr = msg.userNum
                     $(".number.user_register").text(msg.gnum)
-                    console.log(msg)
+                    $(".t-1-user1").text(msg.fnum);
+                    $(".t-2-user1").text(msg.snum);
+                    $(".t-3-user1").text(msg.tnum);
+                    $(".t-4-user1").text(msg.fournum);
                     $.ajax({
                         type: "get",
                         url: config.data + "users/getLoginNum",
@@ -462,6 +528,10 @@
                         success: function (msg2) {
                             var arr2 = msg2.loginNum
                             $(".number.user_login").text(msg2.gnum)
+                            $(".t-1-user2").text(msg2.fnum);
+                            $(".t-2-user2").text(msg2.snum);
+                            $(".t-3-user2").text(msg2.tnum);
+                            $(".t-4-user2").text(msg2.fournum);
                             if (sort == 2) {
                                 TrendMap(arr, arr2, sort)
                             } else {
@@ -484,7 +554,6 @@
                 labels = ['1', '2', '3', '2', '5', '6', '7', '8', '9', '10', '11', '12']
             } else {
                 var day = getCountDays(momth);
-                console.log(day)
                 for (var i = 1; i <= day; i++) {
                     if (i > day) break;
                     labels.push(i)
@@ -514,7 +583,6 @@
         }
 
         $(".more-users").click(function () {
-            // console.log(1)
             $(".nav li").find("a").removeClass("active");
             $(".users").addClass("active");
             var href = $(".users").attr("data-href");
@@ -528,6 +596,26 @@
                     // alert($("#sidebar-nav").html())
                 }
             });
+        })
+        $(".time-btn-reset").click(function () {
+            var getYear = myDate.getFullYear();
+            var getMonth = Number(myDate.getMonth()) + 1;
+            var c1 = "./assets/common/img/checked1.png";
+
+            $(".time-m-list li a").addClass("lock")
+            $(".time-y-list li a").removeClass("time-active")
+            $(".time-m-list li a").removeClass("time-active")
+
+            $(".time-y-list li a.y-" + getYear).addClass("time-active")
+            $(".time-m-list li a.m-0" + getMonth).addClass("time-active")
+            $(".time-y-val").text(getYear)
+            $(".time-m-val").text("0" + getMonth)
+
+            $(".icon-checkde img").attr("src", c1)
+            $(".icon-checkde input[type=checkbox]").removeAttr("checked")
+            $(".time-sort").val(1);
+
+            startAjax()
         })
     });
 </script>
