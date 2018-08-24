@@ -1,3 +1,14 @@
+$('#signin-email').bind('keypress', function (event) {
+    if (event.keyCode == "13") {
+        $(".btn-block").click();
+    }
+})
+$('#signin-password').bind('keypress', function (event) {
+    if (event.keyCode == "13") {
+        $(".btn-block").click();
+    }
+})
+
 $(".btn-block").click(function () {
     var username = $("#signin-email").val();
     var password = $("#signin-password").val();
