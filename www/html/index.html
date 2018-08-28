@@ -127,25 +127,29 @@
                                 <span class="info-label">每周注册/活跃人数</span>
                             </div>
                             <div class="weekly-summary text-right">
-                                <div class="info-label">第一周（人）：
+                                <div class="info-label">
+                                    <span class="time-title1">第一周（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-1-user1">0</span>
                                     <i class="t-u-g"></i>
                                     <span class="t_z_user t-1-user2">0</span>
                                 </div>
-                                <div class="info-label">第二周（人）：
+                                <div class="info-label">
+                                    <span class="time-title2">第二周（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-2-user1">0</span>
                                     <i class="t-u-g"></i>
                                     <span class="t_z_user t-2-user2">0</span>
                                 </div>
-                                <div class="info-label">第三周（人）：
+                                <div class="info-label">
+                                    <span class="time-title3">第三周（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-3-user1">0</span>
                                     <i class="t-u-g"></i>
                                     <span class="t_z_user t-3-user2">0</span>
                                 </div>
-                                <div class="info-label">最后（人）：
+                                <div class="info-label">
+                                    <span class="time-title4">最后（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-4-user1">0</span>
                                     <i class="t-u-g"></i>
@@ -352,6 +356,11 @@
         startAjax();
 
         function startAjax() {
+            $("span.time-title1").text("第一周（人）：");
+            $("span.time-title2").text("第二周（人）：");
+            $("span.time-title3").text("第三周（人）：");
+            $("span.time-title4").text("最后（人）：");
+
             var url = config.data + "users/getUserNum";
             var getYear = myDate.getFullYear();
             var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
@@ -551,6 +560,10 @@
         function TrendMap(arr, arr2, sort, momth = 0) {
             var labels = []
             if (sort == 2) {
+                $("span.time-title1").text("第一季度（人）");
+                $("span.time-title2").text("第二季度（人）");
+                $("span.time-title3").text("第三季度（人）");
+                $("span.time-title4").text("第四季度（人）");
                 labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
             } else {
                 var day = getCountDays(momth);
