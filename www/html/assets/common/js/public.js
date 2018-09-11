@@ -8,8 +8,8 @@ var config = {
     // data: "http://192.168.0.207:8877/",
     // data: "http://192.168.0.67:8877/",
     // data: "http://192.168.0.207:8877/",
-    data: "http://192.168.0.207:8879/",
-    // data: "http://www.oneyouxi.com.cn:8877/",
+    // data: "http://192.168.0.207:8879/",
+    data: "http://databack.oneyouxi.com.cn/",
     // base64: "http://base64.oneyouxi.com.cn/",
     // url_upload: "http://182.61.26.179:8878/",
     // url_upload: "https://admin.oneyouxi.com.cn/",
@@ -32,20 +32,36 @@ var mytime = myDate.toLocaleTimeString();     //获取当前时间
 myDate.toLocaleString();        //获取日期与时间
 
 /*获取一个月的天数 */
-function getCountDays(getMonth = 0) {
+function getCountDays(year = 0, month = 0) {
     var curDate = new Date();
-    /* 默认获取当前月份 */
+    var curYear = curDate.getFullYear();
     var curMonth = curDate.getMonth();
 
-    if (getMonth > 0) {
-        curMonth = Number(getMonth) - 1;//因为获取到的是实际的月份因此要减1后再加1
+    if (year > 0) {
+        curYear = year;
     }
-    /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-    curDate.setMonth(Number(curMonth) + 1);
-    /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
-    curDate.setDate(0);
-    /* 返回当月的天数 */
-    return curDate.getDate();
+    curMonth = Number(curMonth) + 1
+    if (month > 0) {
+        curMonth = month;
+    }
+    var dayCount;
+    var now = new Date(curYear, curMonth, 0);
+    dayCount = now.getDate();
+    return dayCount;
+
+    // var curDate = new Date();
+    // /* 默认获取当前月份 */
+    // var curMonth = curDate.getMonth();
+    //
+    // if (getMonth > 0) {
+    //     curMonth = Number(getMonth) - 1;//因为获取到的是实际的月份因此要减1后再加1
+    // }
+    // /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
+    // curDate.setMonth(Number(curMonth) + 1);
+    // /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+    // curDate.setDate(0);
+    // /* 返回当月的天数 */
+    // return curDate.getDate();
 }
 
 //获取cookie

@@ -54,7 +54,7 @@
                                 <span class="icon"><i class="lnr lnr-user"></i></span>
                                 <p>
                                     <span class="number user_register">0</span>
-                                    <span class="title">用户注册数</span>
+                                    <span class="title">当天用户注册数</span>
                                 </p>
                             </div>
                         </div>
@@ -285,7 +285,6 @@
         for (var i in years) {
             var active = ""
             if (years[i] == getYear) {
-                console.log(years[i])
                 active = "time-active"
             }
             div_y += "<li><a href='javascript:void(0)' data-year='" + years[i] + "' class='" + active + " y-" + years[i] + "'>" + years[i] + "</a></li>"
@@ -297,7 +296,6 @@
         for (var i2 in month) {
             var active = ""
             if (month[i2] == getMonth) {
-                console.log(month[i2])
                 active = "time-active"
             }
             div_m += "<li><a href='javascript:void(0)' data-month='" + month[i2] + "' class='" + active + " lock m-" + month[i2] + "'>" + month[i2] + "</a></li>"
@@ -312,7 +310,6 @@
         $(".icon-checkde").on("click", function () {
             var check = $(this).find("input[type='checkbox']").is(':checked');
             var icon_data = $(this).attr("data-time");
-            console.log(check)
             var ym = icon_data.substr(5)
             if (!check) {
                 $(this).find("img").attr("src", c2)
@@ -382,7 +379,6 @@
                     $("#loading").html("<img src='./assets/common/img/loading.gif' />");
                 },
                 success: function (msg) {
-                    console.log(msg)
                     $(".number.user_register").text(msg.gnum)
                     $(".t-1-user1").text(msg.fnum);
                     $(".t-2-user1").text(msg.snum);
@@ -394,7 +390,6 @@
                         url: config.data + "users/getLoginNum",
                         data: count,
                         success: function (msg2) {
-                            console.log(msg2)
                             $(".number.user_login").text(msg2.gnum)
                             $(".t-1-user2").text(msg2.fnum);
                             $(".t-2-user2").text(msg2.snum);
@@ -460,7 +455,8 @@
                         html += "<td>保密</td>";
                     }
                     html += "<td>" + users[i].tel + "</td>";
-                    html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
+                    // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
+                    html += "<td>注册：" + users[i].time_logon + "</td>";
                     html += "<td>--/--</td>";
                     html += "</tr>";
                 }
@@ -544,7 +540,7 @@
                             if (sort == 2) {
                                 TrendMap(arr, arr2, sort)
                             } else {
-                                TrendMap(arr, arr2, sort, parseInt(month))
+                                TrendMap(arr, arr2, sort, parseInt(year), parseInt(month))
                             }
                         }
                     })
@@ -557,7 +553,7 @@
 
         })
 
-        function TrendMap(arr, arr2, sort, momth = 0) {
+        function TrendMap(arr, arr2, sort, year = 0, momth = 0) {
             var labels = []
             if (sort == 2) {
                 $("span.time-title1").text("第一季度（人）");
@@ -566,7 +562,7 @@
                 $("span.time-title4").text("第四季度（人）");
                 labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
             } else {
-                var day = getCountDays(momth);
+                var day = getCountDays(year, momth);
                 for (var i = 1; i <= day; i++) {
                     if (i > day) break;
                     labels.push(i)
