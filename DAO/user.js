@@ -33,6 +33,13 @@ var user = {
         query(sql, [], function (result) {
             return callback(result);
         })
+    },
+
+    getToDayNum: function (start, end, callback) {
+        var sql = "SELECT count(*) AS count FROM t_user WHERE time_logon BETWEEN " + start + " AND " + end;
+        query(sql, [], function (result) {
+            return callback(result[0].count)
+        })
     }
 };
 module.exports = user;

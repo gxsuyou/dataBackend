@@ -45,7 +45,16 @@
                                 <span class="icon"><i class="lnr lnr-user"></i></span>
                                 <p>
                                     <span class="number user-total">0</span>
-                                    <span class="title">用户注册总数</span>
+                                    <span class="title">用户总数</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 index-user">
+                            <div class="metric">
+                                <span class="icon"><i class="lnr lnr-user"></i></span>
+                                <p>
+                                    <span class="number user_reg_day">0</span>
+                                    <span class="title">今天的新用户</span>
                                 </p>
                             </div>
                         </div>
@@ -54,7 +63,7 @@
                                 <span class="icon"><i class="lnr lnr-user"></i></span>
                                 <p>
                                     <span class="number user_register">0</span>
-                                    <span class="title">当天用户注册数</span>
+                                    <span class="title">当年（月）新用户</span>
                                 </p>
                             </div>
                         </div>
@@ -63,7 +72,7 @@
                                 <span class="icon"><i class="lnr lnr-heart"></i></span>
                                 <p>
                                     <span class="number user_login">0</span>
-                                    <span class="title">用户活跃数</span>
+                                    <span class="title">当年（月）活跃量</span>
                                 </p>
                             </div>
                         </div>
@@ -117,43 +126,47 @@
                         <div class="col-md-3">
                             <div class="weekly-summary text-right" style="margin-bottom: 15px">
                                 <span class="number user_reg"></span>
-                                <span class="info-label">用户注册数</span>
+                                <span class="info-label">新用户数</span>
                             </div>
                             <div class="weekly-summary text-right">
                                 <span class="number user_log"></span>
-                                <span class="info-label">用户活跃数</span>
+                                <span class="info-label">用户活跃量</span>
                             </div>
                             <div class="weekly-summary text-right" style="margin-bottom: 0">
-                                <span class="info-label">每周注册/活跃人数</span>
+                                <span class="info-label">每周新人/活跃量</span>
                             </div>
                             <div class="weekly-summary text-right">
                                 <div class="info-label">
-                                    <span class="time-title1">第一周（人）：</span>
+                                    <span class="time-title1">第一周期（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-1-user1">0</span>
                                     <i class="t-u-g"></i>
                                     <span class="t_z_user t-1-user2">0</span>
                                 </div>
                                 <div class="info-label">
-                                    <span class="time-title2">第二周（人）：</span>
+                                    <span class="time-title2">第二周期（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-2-user1">0</span>
                                     <i class="t-u-g"></i>
                                     <span class="t_z_user t-2-user2">0</span>
                                 </div>
                                 <div class="info-label">
-                                    <span class="time-title3">第三周（人）：</span>
+                                    <span class="time-title3">第三周期（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-3-user1">0</span>
                                     <i class="t-u-g"></i>
                                     <span class="t_z_user t-3-user2">0</span>
                                 </div>
                                 <div class="info-label">
-                                    <span class="time-title4">最后（人）：</span>
+                                    <span class="time-title4">第三周期（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-4-user1">0</span>
                                     <i class="t-u-g"></i>
                                     <span class="t_z_user t-4-user2">0</span>
+                                </div>
+                                <div class="info-label">
+                                    <img class="time-tip-img" src="./assets/common/img/th.png" alt=""
+                                         style="width: 22px">
                                 </div>
                             </div>
                         </div>
@@ -338,6 +351,16 @@
             }
         })
 
+        $(".time-tip-img").on("click", function () {
+            layer.open({
+                type: 1,
+                area: ['500px', '90px'],
+                shade: false,
+                title: false, //不显示标题
+                content: $('.time-tip'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+        })
+
     })
 </script>
 <script>
@@ -353,10 +376,10 @@
         startAjax();
 
         function startAjax() {
-            $("span.time-title1").text("第一周（人）：");
-            $("span.time-title2").text("第二周（人）：");
-            $("span.time-title3").text("第三周（人）：");
-            $("span.time-title4").text("最后（人）：");
+            // $("span.time-title1").text("第一周（人）：");
+            // $("span.time-title2").text("第二周（人）：");
+            // $("span.time-title3").text("第三周（人）：");
+            // $("span.time-title4").text("最后（人）：");
 
             var url = config.data + "users/getUserNum";
             var getYear = myDate.getFullYear();
@@ -380,6 +403,7 @@
                 },
                 success: function (msg) {
                     $(".number.user_register").text(msg.gnum)
+                    $(".number.user_reg_day").text(msg.toDayReg)
                     $(".t-1-user1").text(msg.fnum);
                     $(".t-2-user1").text(msg.snum);
                     $(".t-3-user1").text(msg.tnum);
@@ -556,10 +580,10 @@
         function TrendMap(arr, arr2, sort, year = 0, momth = 0) {
             var labels = []
             if (sort == 2) {
-                $("span.time-title1").text("第一季度（人）");
-                $("span.time-title2").text("第二季度（人）");
-                $("span.time-title3").text("第三季度（人）");
-                $("span.time-title4").text("第四季度（人）");
+                // $("span.time-title1").text("第一季度（人）");
+                // $("span.time-title2").text("第二季度（人）");
+                // $("span.time-title3").text("第三季度（人）");
+                // $("span.time-title4").text("第四季度（人）");
                 labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
             } else {
                 var day = getCountDays(year, momth);
@@ -629,6 +653,13 @@
     });
 </script>
 </div>
+<div class="time-tip">
+    <ul>
+        <li>1、查询月份周期时间为每七天一周期，最后一周为22号到月末</li>
+        <li>2、查询年份周期时间为每三个月（一个季度）一周期</li>
+    </ul>
+</div>
+
 <!-- END WRAPPER -->
 </body>
 

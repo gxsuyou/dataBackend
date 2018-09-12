@@ -129,7 +129,15 @@ router.get('/getLoginNum', function (req, res, next) {
             for (var i = 21; i <= days - 1; i++) {
                 fournum = arr[i] + fournum;
             }
-            res.json({state: 1, loginNum: arr, gnum: gnum, fnum: fnum, snum: snum, tnum: tnum, fournum: fournum});
+            res.json({
+                state: 1,
+                loginNum: arr,
+                gnum: gnum,
+                fnum: fnum,
+                snum: snum,
+                tnum: tnum,
+                fournum: fournum,
+            });
         } else if (sort == 2) {
             var ly = parseInt(data.last_time);
             for (var i = result.length - 1; i >= 0; i--) {
@@ -168,111 +176,144 @@ router.get('/getLoginNum', function (req, res, next) {
             for (var i = 9; i <= 11; i++) {
                 fournum = arr[i] + fournum;
             }
-            res.json({state: 1, loginNum: arr, gnum: gnum, fnum: fnum, snum: snum, tnum: tnum, fournum: fournum});
+            res.json({
+                state: 1,
+                loginNum: arr,
+                gnum: gnum,
+                fnum: fnum,
+                snum: snum,
+                tnum: tnum,
+                fournum: fournum,
+            });
         }
     })
 });
 
 // 获取APP用户
 router.get('/getUserNum', function (req, res, next) {
+    var date = new Date();
+    var start = date.setHours(0, 0, 0, 0) / 1000;
+    var end = Number(start) + 86400 - 1;
+
     var data = req.query;
     var sort = data.sort;
-    user.getUserList(function (result) {
-        if (sort == 0) { //获取所有的登录用户数
-            res.json({state: 1, userNum: result.length});
-        } else if (sort == 1) {  //按月份获取登录数
-            var last = data.last_time;
-            var ly = parseInt(last.substring(0, 4));
-            var lm = parseInt(last.substring(5, 7));
-            for (var i = result.length - 1; i >= 0; i--) {
-                var time = result[i].time_logon;
-                var y = parseInt(time.substring(0, 4));
-                var m = parseInt(time.substring(5, 7));
-                var d = parseInt(time.substring(8, 10));
-                if (y != ly) {
-                    result.splice(i, 1);
-                }
-                if (m != lm) {
-                    result.splice(i, 1);
-                }
-            }
-            var thisDate = new Date(ly, lm, 0);
-            var days = thisDate.getDate();
-            var arr = [];
-            if (lm < 10) {
-                lm = '0' + lm;
-            }
-            for (var i = 1; i <= days; i++) {
-                if (i < 10) {
-                    i = '0' + i;
-                }
-                var val = ly + '-' + lm + '-' + i;
-                var newarr = result.filter(function (obj) {
-                    return obj.time_logon == val;
-                });
-                arr.push(newarr.length);
-            }
-            var fnum = 0;//每个月第一个星期的总数
-            var snum = 0;//每个月第二个星期的总数
-            var tnum = 0;//每个月第三个星期的总数
-            var fournum = 0;//每个月第四个星期的总数
-            var gnum = result.length;//每个月的总数
-            for (var i = 0; i <= 6; i++) {
-                fnum = arr[i] + fnum;
-            }
-            for (var i = 7; i <= 13; i++) {
-                snum = arr[i] + snum;
-            }
-            for (var i = 14; i <= 20; i++) {
-                tnum = arr[i] + tnum;
-            }
-            for (var i = 21; i <= days - 1; i++) {
-                fournum = arr[i] + fournum;
-            }
+    user.getToDayNum(start, end, function (day_count) {
 
-            res.json({state: 1, userNum: arr, gnum: gnum, fnum: fnum, snum: snum, tnum: tnum, fournum: fournum});
-        } else if (sort == 2) {
-            var ly = parseInt(data.last_time);
-            for (var i = result.length - 1; i >= 0; i--) {
-                var time = result[i].time_logon;
-                var y = parseInt(time.substring(0, 4));
-                var m = parseInt(time.substring(5, 7));
-                if (y != ly) {
-                    result.splice(i, 1);
+        user.getUserList(function (result) {
+            if (sort == 0) { //获取所有的登录用户数
+                res.json({state: 1, userNum: result.length});
+            } else if (sort == 1) {  //按月份获取登录数
+                var last = data.last_time;
+                var ly = parseInt(last.substring(0, 4));
+                var lm = parseInt(last.substring(5, 7));
+                for (var i = result.length - 1; i >= 0; i--) {
+                    var time = result[i].time_logon;
+                    var y = parseInt(time.substring(0, 4));
+                    var m = parseInt(time.substring(5, 7));
+                    var d = parseInt(time.substring(8, 10));
+                    if (y != ly) {
+                        result.splice(i, 1);
+                    }
+                    if (m != lm) {
+                        result.splice(i, 1);
+                    }
                 }
-            }
-            var arr = [];
-            for (var i = 1; i <= 12; i++) {
-                if (i < 10) {
-                    i = '0' + i;
+                var thisDate = new Date(ly, lm, 0);
+                var days = thisDate.getDate();
+                var arr = [];
+                if (lm < 10) {
+                    lm = '0' + lm;
                 }
-                var val = ly + '-' + i;
-                var newarr = result.filter(function (obj) {
-                    return obj.time_logon.substring(0, 7) == val;
+                for (var i = 1; i <= days; i++) {
+                    if (i < 10) {
+                        i = '0' + i;
+                    }
+                    var val = ly + '-' + lm + '-' + i;
+                    var newarr = result.filter(function (obj) {
+                        return obj.time_logon == val;
+                    });
+                    arr.push(newarr.length);
+                }
+                var fnum = 0;//每个月第一个星期的总数
+                var snum = 0;//每个月第二个星期的总数
+                var tnum = 0;//每个月第三个星期的总数
+                var fournum = 0;//每个月第四个星期的总数
+                var gnum = result.length;//每个月的总数
+                for (var i = 0; i <= 6; i++) {
+                    fnum = arr[i] + fnum;
+                }
+                for (var i = 7; i <= 13; i++) {
+                    snum = arr[i] + snum;
+                }
+                for (var i = 14; i <= 20; i++) {
+                    tnum = arr[i] + tnum;
+                }
+                for (var i = 21; i <= days - 1; i++) {
+                    fournum = arr[i] + fournum;
+                }
+
+                res.json({
+                    state: 1,
+                    userNum: arr,
+                    gnum: gnum,
+                    fnum: fnum,
+                    snum: snum,
+                    tnum: tnum,
+                    fournum: fournum,
+                    toDayReg: day_count > 0 ? day_count : 0
                 });
-                arr.push(newarr.length);
-                // var nn = parseInt(i);
-                // arr[nn] = newarr.length;
+            } else if (sort == 2) {
+                var ly = parseInt(data.last_time);
+                for (var i = result.length - 1; i >= 0; i--) {
+                    var time = result[i].time_logon;
+                    var y = parseInt(time.substring(0, 4));
+                    var m = parseInt(time.substring(5, 7));
+                    if (y != ly) {
+                        result.splice(i, 1);
+                    }
+                }
+                var arr = [];
+                for (var i = 1; i <= 12; i++) {
+                    if (i < 10) {
+                        i = '0' + i;
+                    }
+                    var val = ly + '-' + i;
+                    var newarr = result.filter(function (obj) {
+                        return obj.time_logon.substring(0, 7) == val;
+                    });
+                    arr.push(newarr.length);
+                    // var nn = parseInt(i);
+                    // arr[nn] = newarr.length;
+                }
+                var fnum = 0;//每年第一个季度的总数
+                var snum = 0;//每年第二个季度的总数
+                var tnum = 0;//每年第三个季度的总数
+                var fournum = 0;//每年第四个季度的总数
+                var gnum = result.length;//每年的总数
+                for (var i = 0; i <= 2; i++) {
+                    fnum = arr[i] + fnum;
+                }
+                for (var i = 3; i <= 5; i++) {
+                    snum = arr[i] + snum;
+                }
+                for (var i = 6; i <= 8; i++) {
+                    tnum = arr[i] + tnum;
+                }
+                for (var i = 9; i <= 11; i++) {
+                    fournum = arr[i] + fournum;
+                }
+                res.json({
+                    state: 1,
+                    userNum: arr,
+                    gnum: gnum,
+                    fnum: fnum,
+                    snum: snum,
+                    tnum: tnum,
+                    fournum: fournum,
+                    toDayReg: day_count > 0 ? day_count : 0
+                });
             }
-            var fnum = 0;//每年第一个季度的总数
-            var snum = 0;//每年第二个季度的总数
-            var tnum = 0;//每年第三个季度的总数
-            var fournum = 0;//每年第四个季度的总数
-            var gnum = result.length;//每年的总数
-            for (var i = 0; i <= 2; i++) {
-                fnum = arr[i] + fnum;
-            }
-            for (var i = 3; i <= 5; i++) {
-                snum = arr[i] + snum;
-            }
-            for (var i = 6; i <= 8; i++) {
-                tnum = arr[i] + tnum;
-            }
-            for (var i = 9; i <= 11; i++) {
-                fournum = arr[i] + fournum;
-            }
-            res.json({state: 1, userNum: arr, gnum: gnum, fnum: fnum, snum: snum, tnum: tnum, fournum: fournum});
-        }
+        })
     })
 });
 
