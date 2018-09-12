@@ -44,9 +44,10 @@ Date.prototype.Format = function (formatStr) {
 router.get('/getUserList', function (req, res, next) {
     var p = req.query.p > 0 ? req.query.p : 1;
     var tables = 't_user';
-    var where = {where: " order by id desc "};
-    var field = "id,FROM_UNIXTIME(time_logon,'%Y-%m-%d') as time_logon," +
-        "FROM_UNIXTIME(login_time,'%Y-%m-%d') as login_time,nick_name,tel,sex";
+    var where = {where: " ORDER BY id DESC "};
+    var field = "id,FROM_UNIXTIME(time_logon,'%Y-%m-%d') AS time_logon," +
+        "FROM_UNIXTIME(login_time,'%Y-%m-%d') AS login_time,nick_name,tel,sex," +
+        "(SELECT COUNT(*) FROM t_all_activity_log WHERE user_id=t_user.id ) AS log_count";
 
     common.page(tables, p, where, "", field, function (result) {
         for (var i in result.result) {
