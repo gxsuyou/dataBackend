@@ -97,6 +97,7 @@ router.get('/getLoginNum', function (req, res, next) {
                     result.splice(i, 1);
                 }
             }
+            console.log(result.length)
             var thisDate = new Date(ly, lm, 0);
             var days = thisDate.getDate();
             var arr = [];

@@ -35,7 +35,6 @@ app.use('*', function (req, res, next) {
     next();
 });
 app.use(function getIp(req, res, next) {
-    //console.log(req.query.token);
     if (!req.query.token) {
         var ips = ipslist.lists;
         var ip = req.headers['x-forwarded-for'] ||
@@ -49,17 +48,21 @@ app.use(function getIp(req, res, next) {
         if (ip.search("::ffff:") > -1) {
             ip = ip.split("::ffff:").join("");
         }
-        console.log(ip)
-        if (req.url.indexOf("www") > -1 || req.url.indexOf("/img?") > -1) {
-            next();
-        } else {
-            if (ips.toString().indexOf(ip) < 0) {
-                var err = new Error('Not Found');
-                err.status = 404;
-                next(err);
-            } else {
+        if (ips[0] != "0.0.0.0") {//全开放
+            console.log(ip)
+            if (req.url.indexOf("www") > -1 || req.url.indexOf("/img?") > -1) {
                 next();
+            } else {
+                if (ips.toString().indexOf(ip) < 0) {
+                    var err = new Error('Not Found');
+                    err.status = 404;
+                    next(err);
+                } else {
+                    next();
+                }
             }
+        } else {
+            next();
         }
     } else {
         next()
