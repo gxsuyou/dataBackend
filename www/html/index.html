@@ -645,7 +645,8 @@
             $(".time-y-list li a.y-" + getYear).addClass("time-active")
             $(".time-m-list li a.m-0" + getMonth).addClass("time-active")
             $(".time-y-val").text(getYear)
-            $(".time-m-val").text("0" + getMonth)
+            var z = getMonth > 9 ? "" : "0";
+            $(".time-m-val").text(z + getMonth)
 
             $(".icon-checkde img").attr("src", c1)
             $(".icon-checkde input[type=checkbox]").removeAttr("checked")
