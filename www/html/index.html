@@ -393,8 +393,11 @@
                 last_time: getDate
             };
 
+            var startMonth = "0" + getMonth;
+            if (startMonth > 9) startMonth = getMonth;
+
             $(".time-y-val").text(getYear);
-            $(".time-m-val").text("0" + getMonth);
+            $(".time-m-val").text(startMonth);
 
             $.ajax({
                 type: "get",
@@ -645,9 +648,9 @@
             $(".time-y-list li a.y-" + getYear).addClass("time-active")
             $(".time-m-list li a.m-0" + getMonth).addClass("time-active")
             $(".time-y-val").text(getYear)
-            var z = getMonth > 9 ? "" : "0";
-            console.log(z)
-            $(".time-m-val").text(z + getMonth)
+            var reMonth = "0" + getMonth;
+            if (getMonth > 9) reMonth = getMonth;
+            $(".time-m-val").text(reMonth)
 
             $(".icon-checkde img").attr("src", c1)
             $(".icon-checkde input[type=checkbox]").removeAttr("checked")
