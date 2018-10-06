@@ -385,6 +385,9 @@
             var getYear = myDate.getFullYear();
             var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
             var getDate = getYear + "-0" + getMonth;//yyyy-MM如：2018-08
+            if (getMonth > 9) {
+                getDate = getYear + "-" + getMonth;
+            }
             var count = {
                 sort: 1,
                 last_time: getDate
