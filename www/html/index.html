@@ -158,7 +158,7 @@
                                     <span class="t_z_user t-3-user2">0</span>
                                 </div>
                                 <div class="info-label">
-                                    <span class="time-title4">第三周期（人）：</span>
+                                    <span class="time-title4">第四周期（人）：</span>
                                     <i class="t-u-b"></i>
                                     <span class="t_z_user t-4-user1">0</span>
                                     <i class="t-u-g"></i>
@@ -291,10 +291,10 @@
     $(function () {
         var getYear = myDate.getFullYear();
         var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
-        var years = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+        var years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028]
         var month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
         //year
-        var div_y = "<ul>"
+        var div_y = "<ul>年份："
         for (var i in years) {
             var active = ""
             if (years[i] == getYear) {
@@ -305,7 +305,7 @@
         div_y += "<ul>"
 
         //month
-        var div_m = "<ul>"
+        var div_m = "<ul>月份："
         for (var i2 in month) {
             var active = ""
             if (month[i2] == getMonth) {
@@ -455,6 +455,25 @@
                     $("#loading").empty();
                 }
             });
+
+
+            $.ajax({
+                type: "get",
+                url: userUrl,
+                data: {p: 1},
+                timeout: 15000,
+                beforeSend: function (XMLHttpRequest) {
+                    //alert('远程调用开始...');
+                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                },
+                success: function () {
+
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // alert('远程调用成功，状态文本值：'+textStatus);
+                    $("#loading").empty();
+                }
+            })
         }
 
         var userUrl = config.data + "users/getUserList";
@@ -493,10 +512,10 @@
                 html += "<input type='hidden' id='url' value='" + userUrl + "'/>"
                 $(".indexULists").append(html);
             },
-            // complete: function (XMLHttpRequest, textStatus) {
-            //     // alert('远程调用成功，状态文本值：'+textStatus);
-            //     $("#loading").empty();
-            // }
+            complete: function (XMLHttpRequest, textStatus) {
+                // alert('远程调用成功，状态文本值：'+textStatus);
+                $("#loading").empty();
+            }
         });
 
         $(".time-y-list li").on("click", function () {

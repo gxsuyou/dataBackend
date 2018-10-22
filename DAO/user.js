@@ -34,12 +34,36 @@ var user = {
             return callback(result);
         })
     },
+    // 获取下载数量
+    getDownNum: function (callback) {
+        var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log WHERE type=1";
+        query(sql, [], function (result) {
+            return callback(result);
+        })
+    },
 
     getToDayNum: function (start, end, callback) {
         var sql = "SELECT count(*) AS count FROM t_user WHERE time_logon BETWEEN " + start + " AND " + end;
         query(sql, [], function (result) {
             return callback(result[0].count)
         })
-    }
+    },
+
+    /*changeDnum: function (callback) {
+        var sql = "SELECT *,GROUP_CONCAT(sys) AS sys_b,GROUP_CONCAT(num) AS num_b " +
+            "FROM t_all_activity_log WHERE type=1 AND start_time=1539705600 GROUP BY type";
+        query(sql, [], function (result) {
+            return callback(result)
+        })
+    },
+
+    changeDnum2: function (obj, callback) {
+        var sql = "INSERT INTO t_all_activity_log (`start_time`,`type`,`sys`,`num`) VALUES (?,1,?,0)";
+        query(sql, [obj.start, obj.sys], function (result) {
+            return callback(result);
+        })
+    }*/
+
+
 };
 module.exports = user;

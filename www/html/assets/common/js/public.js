@@ -8,7 +8,7 @@ var config = {
     // data: "http://192.168.0.207:8877/",
     // data: "http://192.168.0.67:8877/",
     // data: "http://192.168.0.207:8877/",
-    data: "http://192.168.0.207:8879/",
+    data: "http://192.168.0.37:8879/",
     // data: "http://databack.oneyouxi.com.cn/",
     // base64: "http://base64.oneyouxi.com.cn/",
     // url_upload: "http://182.61.26.179:8878/",
