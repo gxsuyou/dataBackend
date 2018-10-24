@@ -91,3 +91,4 @@ function setCookie(name, value, day) {
 function delCookie(name) {
     $.cookie(name, '', {expires: -1});
 }
+

@@ -117,8 +117,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-9" style="position: relative">
+                    <div class="row ">
+                        <div class="col-md-9 index-chart" style="position: relative">
                             <div id="headline-chart" class="ct-chart" style="height: 305px;"></div>
                             <div id="loading"
                                  style="width: 98%; position: absolute; text-align: center; top: 30%"></div>
@@ -199,41 +199,6 @@
                                 </tr>
                                 </thead>
                                 <tbody class="indexULists">
-                                <!--<tr>
-                                    <td><a href="#">763648</a></td>
-                                    <td>Steve</td>
-                                    <td>$122</td>
-                                    <td>Oct 21, 2016</td>
-                                    <td><span class="label label-success">COMPLETED</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">763649</a></td>
-                                    <td>Amber</td>
-                                    <td>$62</td>
-                                    <td>Oct 21, 2016</td>
-                                    <td><span class="label label-warning">PENDING</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">763650</a></td>
-                                    <td>Michael</td>
-                                    <td>$34</td>
-                                    <td>Oct 18, 2016</td>
-                                    <td><span class="label label-danger">FAILED</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">763651</a></td>
-                                    <td>Roger</td>
-                                    <td>$186</td>
-                                    <td>Oct 17, 2016</td>
-                                    <td><span class="label label-success">SUCCESS</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">763652</a></td>
-                                    <td>Smith</td>
-                                    <td>$362</td>
-                                    <td>Oct 16, 2016</td>
-                                    <td><span class="label label-success">SUCCESS</span></td>
-                                </tr>-->
                                 </tbody>
                             </table>
                         </div>
@@ -253,23 +218,6 @@
                     </div>
                     <!-- END RECENT PURCHASES -->
                 </div>
-                <!--<div class="col-md-6">-->
-                <!--&lt;!&ndash; MULTI CHARTS &ndash;&gt;-->
-                <!--<div class="panel">-->
-                <!--<div class="panel-heading">-->
-                <!--<h3 class="panel-title">Projection vs. Realization</h3>-->
-                <!--<div class="right">-->
-                <!--<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i>-->
-                <!--</button>-->
-                <!--<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="panel-body">-->
-                <!--<div id="visits-trends-chart" class="ct-chart"></div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; END MULTI CHARTS &ndash;&gt;-->
-                <!--</div>-->
             </div>
             <!-- END OVERVIEW -->
         </div>
@@ -281,10 +229,6 @@
 <div class="clearfix"></div>
 <footer>
     <div class="container-fluid">
-        <!--<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates-->
-        <!--<a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from-->
-        <!--<a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>-->
-        <!--</p>-->
     </div>
 </footer>
 <script>
@@ -376,11 +320,6 @@
         startAjax();
 
         function startAjax() {
-            // $("span.time-title1").text("第一周（人）：");
-            // $("span.time-title2").text("第二周（人）：");
-            // $("span.time-title3").text("第三周（人）：");
-            // $("span.time-title4").text("最后（人）：");
-
             var url = config.data + "users/getUserNum";
             var getYear = myDate.getFullYear();
             var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
@@ -390,6 +329,12 @@
             }
             var count = {
                 sort: 1,
+                type: 2,
+                last_time: getDate
+            };
+            var count2 = {
+                sort: 1,
+                type: 1,
                 last_time: getDate
             };
 
@@ -403,10 +348,6 @@
                 type: "get",
                 url: url,
                 data: count,
-                beforeSend: function (XMLHttpRequest) {
-                    //alert('远程调用开始...');
-                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                },
                 success: function (msg) {
                     $(".number.user_register").text(msg.gnum)
                     $(".number.user_reg_day").text(msg.toDayReg)
@@ -417,63 +358,58 @@
                     var arr = msg.userNum
                     $.ajax({
                         type: "get",
-                        url: config.data + "users/getLoginNum",
+                        url: config.data + "users/getActivityNum",
                         data: count,
                         success: function (msg2) {
-                            $(".number.user_login").text(msg2.gnum)
-                            $(".t-1-user2").text(msg2.fnum);
-                            $(".t-2-user2").text(msg2.snum);
-                            $(".t-3-user2").text(msg2.tnum);
-                            $(".t-4-user2").text(msg2.fournum);
-                            var arr2 = msg2.loginNum
-                            data = {
-                                labels: labels,
-                                series: [
-                                    arr,
-                                    arr2,
-                                ]
-                            };
+                            var arr2 = msg2.arrNum
+                            $(".number.user_login").text(msg2.monthNum)
+                            $(".t-1-user2").text(msg2.oneNum);
+                            $(".t-2-user2").text(msg2.twoNum);
+                            $(".t-3-user2").text(msg2.triNum);
+                            $(".t-4-user2").text(msg2.fourNum);
 
-                            options = {
-                                height: 300,
-                                // showArea: true,
-                                // showLine: false,
-                                // showPoint: false,
-                                fullWidth: true,
-                                axisX: {
-                                    showGrid: false
+                            $.ajax({
+                                type: "get",
+                                url: config.data + "users/getActivityNum",
+                                data: count2,
+                                beforeSend: function (XMLHttpRequest) {
+                                    //alert('远程调用开始...');
+                                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
                                 },
-                                lineSmooth: false,
-                            };
+                                success: function (msg3) {
+                                    var arr3 = msg3.arrNum;
+                                    data = {
+                                        labels: labels,
+                                        series: [
+                                            arr,
+                                            arr2,
+                                            arr3,
+                                        ]
+                                    };
 
-                            new Chartist.Line('#headline-chart', data, options);
+                                    options = {
+                                        height: 300,
+                                        // showArea: true,
+                                        // showLine: false,
+                                        // showPoint: false,
+                                        fullWidth: true,
+                                        axisX: {
+                                            showGrid: false
+                                        },
+                                        lineSmooth: true,
+                                    };
+
+                                    new Chartist.Line('#headline-chart', data, options);
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                    // alert('远程调用成功，状态文本值：'+textStatus);
+                                    $("#loading").empty();
+                                }
+                            })
                         },
                     })
                 },
-                complete: function (XMLHttpRequest, textStatus) {
-                    // alert('远程调用成功，状态文本值：'+textStatus);
-                    $("#loading").empty();
-                }
             });
-
-
-            $.ajax({
-                type: "get",
-                url: userUrl,
-                data: {p: 1},
-                timeout: 15000,
-                beforeSend: function (XMLHttpRequest) {
-                    //alert('远程调用开始...');
-                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                },
-                success: function () {
-
-                },
-                complete: function (XMLHttpRequest, textStatus) {
-                    // alert('远程调用成功，状态文本值：'+textStatus);
-                    $("#loading").empty();
-                }
-            })
         }
 
         var userUrl = config.data + "users/getUserList";
@@ -558,6 +494,12 @@
             }
             var dataArr = {
                 last_time: dataTime,
+                type: 2,
+                sort: sort
+            }
+            var dataArr2 = {
+                last_time: dataTime,
+                type: 1,
                 sort: sort
             }
             $.ajax({
@@ -577,21 +519,46 @@
                     $(".t-4-user1").text(msg.fournum);
                     $.ajax({
                         type: "get",
-                        url: config.data + "users/getLoginNum",
+                        url: config.data + "users/getActivityNum",
                         data: dataArr,
+                        beforeSend: function (XMLHttpRequest) {
+                            //alert('远程调用开始...');
+                            $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                        },
                         success: function (msg2) {
-                            var arr2 = msg2.loginNum
-                            $(".number.user_login").text(msg2.gnum)
-                            $(".t-1-user2").text(msg2.fnum);
-                            $(".t-2-user2").text(msg2.snum);
-                            $(".t-3-user2").text(msg2.tnum);
-                            $(".t-4-user2").text(msg2.fournum);
-                            if (sort == 2) {
-                                TrendMap(arr, arr2, sort)
-                            } else {
-                                TrendMap(arr, arr2, sort, parseInt(year), parseInt(month))
-                            }
+                            var arr2 = msg2.arrNum
+                            $(".number.user_login").text(msg2.monthNum)
+                            $(".t-1-user2").text(msg2.oneNum);
+                            $(".t-2-user2").text(msg2.twoNum);
+                            $(".t-3-user2").text(msg2.triNum);
+                            $(".t-4-user2").text(msg2.fourNum);
+                            $.ajax({
+                                type: "get",
+                                url: config.data + "users/getActivityNum",
+                                data: dataArr2,
+                                beforeSend: function (XMLHttpRequest) {
+                                    //alert('远程调用开始...');
+                                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                                },
+                                success: function (msg3) {
+                                    var arr3 = msg3.arrNum
+                                    if (sort == 2) {
+                                        TrendMap(arr, arr2, arr3, sort)
+                                    } else {
+                                        TrendMap(arr, arr2, arr3, sort, parseInt(year), parseInt(month))
+                                    }
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                    // alert('远程调用成功，状态文本值：'+textStatus);
+                                    $("#loading").empty();
+                                }
+                            })
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {
+                            // alert('远程调用成功，状态文本值：'+textStatus);
+                            $("#loading").empty();
                         }
+
                     })
                 },
                 complete: function (XMLHttpRequest, textStatus) {
@@ -602,7 +569,7 @@
 
         })
 
-        function TrendMap(arr, arr2, sort, year = 0, momth = 0) {
+        function TrendMap(arr, arr2, arr3, sort, year = 0, momth = 0) {
             var labels = []
             if (sort == 2) {
                 // $("span.time-title1").text("第一季度（人）");
@@ -622,6 +589,7 @@
                 series: [
                     arr,
                     arr2,
+                    arr3
                 ]
             };
 
@@ -634,7 +602,7 @@
                 axisX: {
                     showGrid: false
                 },
-                lineSmooth: false,
+                lineSmooth: true,
             };
 
             new Chartist.Line('#headline-chart', data, options);

@@ -27,21 +27,21 @@ var page = {
             }
         }
 
-        var sql = "SELECT COUNT(*) AS count FROM `" + tables + "` WHERE id > 0" + sysWhere + sortWhere;
+        var sql = "SELECT COUNT(*) AS count FROM `" + tables + "` WHERE " + where.where + sysWhere + sortWhere;
         if (sqlTypes == "left") {//关联查询
-            sql = "SELECT COUNT(*) AS count FROM `" + tables[0] + "` WHERE id > 0 " + sysWhere + sortWhere;
+            sql = "SELECT COUNT(*) AS count FROM `" + tables[0] + "` WHERE  " + where.where + sysWhere + sortWhere;
         }
         query(sql, [], function (result) {
             if (result[0].count > 0) {
                 var sql_1 = "SELECT " + fields + " FROM " + tables + " " + where.where + " limit ?,?";
                 if (sqlTypes == "left") {
-                    var LEFT = "";
+                    var LEFT1 = " LEFT JOIN " + tables[1] + " ON " + where.left1 + " "
+                    var LEFT2 = "";
                     if (tables[2]) {//第三个表
-                        LEFT = "LEFT JOIN  " + tables[2] + " ON " + where.left_on + " \n ";
+                        LEFT2 = " LEFT JOIN " + tables[2] + " ON " + where.left2 + " ";
                     }
-                    sql_1 = "SELECT " + fields + " FROM " + tables[0] + " \n " + LEFT +
-                        "LEFT JOIN  " + tables[1] + "\n " +
-                        "ON " + where.where + " limit ?,?";
+                    sql_1 = "SELECT " + fields + " FROM " + tables[0] + " " + LEFT1 + LEFT2 +
+                        " WHERE " + where.where + " limit ?,?";
                 }
                 query(sql_1, [(pages - 1) * page, page], function (lists) {
                     var arr = {

@@ -28,9 +28,15 @@ var user = {
         })
     },
     // 获取用户登录数量
-    getLoginNum: function (callback) {
-        var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log WHERE type=2";
-        query(sql, [], function (result) {
+    getActivityNum: function (obj, callback) {
+        var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log WHERE type=?";
+        query(sql, [obj.type], function (result) {
+            return callback(result);
+        })
+    },
+    getActivityNum2: function (obj, callback) {
+        var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log";
+        query(sql, [obj.type], function (result) {
             return callback(result);
         })
     },

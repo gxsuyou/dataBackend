@@ -15,3 +15,7 @@ ul {
 .time-tip {
     display: none;
 }
+
+.user-action {
+    cursor: pointer;
+}

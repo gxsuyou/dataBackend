@@ -1,15 +1,29 @@
 <!-- MAIN -->
 <div class="main">
-    <link rel="stylesheet" href="./assets/common/css/user-lists.css">
+    <!--<link rel="stylesheet" href="./assets/common/css/user-lists.css">-->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet" href="assets/vendor/linearicons/style.css">-->
+    <link rel="stylesheet" href="../assets/vendor/common/fonts/icon-font.min.css">
+    <link rel="stylesheet" href="../assets/vendor/chartist/css/chartist-custom.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="../assets/css/demo.css">
+    <!-- GOOGLE FONTS -->
+    <link rel="stylesheet" href="../assets/vendor/common/fonts/fonts.css">
+    <link rel="stylesheet" href="../assets/common/css/page.css">
     <style>
-
+        .layui-layer-loading .layui-layer-loading2 {
+            margin: 0 auto !important;
+        }
     </style>
     <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="container-fluid">
             <h3 class="page-title">用户列表</h3>
             <div class="row">
-                <div class="col-md-6 user-list">
+                <div class="col-md-12 user-list">
                     <!-- BASIC TABLE -->
                     <div class="panel">
                         <div class="panel-heading">
@@ -42,6 +56,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <!--<input type="text" id="uid" style="display:none" value="">-->
                         <div class="pages">
                             <div class="pages-div pull-right">
                                 <ul>
@@ -56,7 +71,6 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" id="uid" value="">
                     <!-- END BASIC TABLE -->
                 </div>
                 <div id="loading" style="width: 98%; position: absolute; text-align: center; top: 48%"></div>
@@ -65,26 +79,26 @@
     </div>
     <!-- END MAIN CONTENT -->
 </div>
-<!-- END MAIN -->
-<div class="clearfix"></div>
-<footer>
-    <div class="container-fluid">
-        <!--<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates-->
-        <!--<a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from-->
-        <!--<a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>-->
-        <!--</p>-->
-    </div>
-</footer>
-</div>
-<!-- END WRAPPER -->
-<!-- Javascript -->
-<!--<script type="application/javascript" src="./assets/common/js/user-lists.js"></script>-->
+<script src="../assets/vendor/jquery/jquery.min.js"></script>
+<script src="../assets/common/js/cookie/jquery.cookie.js"></script>
+<script src="../assets/common/js/public.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="../assets/common/layer/layer.js"></script>
+<!--<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>-->
+<!--<script src="../assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>-->
+<!--<script src="../assets/vendor/chartist/js/chartist.min.js"></script>-->
+<!--<script src="../assets/scripts/klorofil-common.js"></script>-->
+<script src="../assets/common/js/page.js"></script>
 <script>
-    $(function () {
+    $(document).ready(function () {
+        // var id = $("input#uid").val();
+        var id = parent.$('#uid').val();
+
         var data = {
             p: 1,
+            uid: id
         }
-        var url = config.data + "users/getUserList";
+        var url = config.data + "users/getRecUserList";
         $.ajax({
             type: "get",
             url: url,
@@ -116,7 +130,7 @@
                     html += "<td>" + users[i].tel + "</td>";
                     // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
                     html += "<td>注册：" + users[i].time_logon + "</td>";
-                    html += "<td><a data-url='user/user-recommon.html' class='user-action open-iframe' data-width='1050px' data-height='600px' onclick='openIframe(this)' data-nick='" + users[i].nick_name + "' data-uid='" + users[i].id + "'>推荐</a></td>";
+                    html += "<td>--/--</td>";
                     html += "</tr>";
                 }
                 html += "<input type='hidden' id='url' value='" + url + "'/>"
@@ -168,7 +182,7 @@
                             html += "<td>" + users[i].tel + "</td>";
                             // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
                             html += "<td>注册：" + users[i].time_logon + "</td>";
-                            html += "<td><a data-url='user/user-recommon.html' class='user-action open-iframe' data-width='1050px' data-height='600px' onclick='openIframe(this)' data-nick='" + users[i].nick_name + "' data-uid='" + users[i].id + "'>推荐</a></td>";
+                            html += "<td>--/--</td>";
                             html += "</tr>";
                         }
                         html += "<input type='hidden' id='url' value='" + url + "'/>"
@@ -189,32 +203,3 @@
         }
     })
 </script>
-<script>
-    function openIframe(obj) {
-        var width = $(obj).attr("data-width");
-        var height = $(obj).attr("data-height");
-        var url = $(obj).attr("data-url");
-        var nick = $(obj).attr("data-nick");
-        var id = $(obj).attr("data-uid");
-        $("#uid").val(id)
-        layer.open({
-            type: 2,
-            title: "[" + nick + ']的推荐',
-            shadeClose: true,
-            shade: 0.7,
-            maxmin: true, //开启最大化最小化按钮
-            area: [width, height],
-            content: "./" + url,
-            success: function (layero, index) {
-                //注意这里的#sid是iframe页面中的一个标签id
-                var jquerySendHelloButton = $("#uid", layero.find("iframe")[0].contentWindow.document);
-                console.log(id)
-                jquerySendHelloButton.attr("value", id);
-
-            },
-        });
-    }
-</script>
-</body>
-
-</html>

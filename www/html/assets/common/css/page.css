@@ -5,6 +5,10 @@
     top: -40px;
 }
 
+.pages-div ul {
+    list-style-type: none;
+}
+
 .pages-div li {
     float: left;
     margin-right: 8px;
