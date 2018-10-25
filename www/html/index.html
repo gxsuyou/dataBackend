@@ -349,6 +349,7 @@
                     },
                     success: function (msg) {
                         var arr = msg.userNum
+                        $(".user-total").text(msg.totalUser)
                         $(".number.user_register").text(msg.gnum)
                         $(".number.user_reg_day").text(msg.toDayReg)
                         $(".t-1-user1").text(msg.fnum);
@@ -470,6 +471,7 @@
                     },
                     success: function (msg) {
                         var arr = msg.userNum
+                        $(".user-total").text(msg.totalUser)
                         $(".number.user_register").text(msg.gnum)
                         $(".t-1-user1").text(msg.fnum);
                         $(".t-2-user1").text(msg.snum);

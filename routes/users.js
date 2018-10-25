@@ -238,6 +238,7 @@ router.get('/getUserNum', function (req, res, next) {
     user.getToDayNum(start, end, function (day_count) {
 
         user.getUserList(function (result) {
+            var totalUser = result.length;
             if (sort == 0) { //获取所有的登录用户数
                 res.json({state: 1, userNum: result.length});
             } else if (sort == 1) {  //按月份获取登录数
@@ -298,6 +299,7 @@ router.get('/getUserNum', function (req, res, next) {
                     snum: snum,
                     tnum: tnum,
                     fournum: fournum,
+                    totalUser: totalUser,
                     toDayReg: day_count > 0 ? day_count : 0
                 });
             } else if (sort == 2) {
@@ -348,6 +350,7 @@ router.get('/getUserNum', function (req, res, next) {
                     snum: snum,
                     tnum: tnum,
                     fournum: fournum,
+                    totalUser: totalUser,
                     toDayReg: day_count > 0 ? day_count : 0
                 });
             }
