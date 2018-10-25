@@ -17,7 +17,6 @@ var page = {
         //     "LEFT JOIN t_game AS b ON a.`game_id`=b.`id` order by a.up desc,a.add_time desc limit ?,5";
         var sqlTypes = sqlType;
         var fields = field ? field : "*";
-        var LEFT = "";
         var sysWhere = where.sys > 0 ? " AND sys = " + where.sys : ""
         var sort = where.sortType ? where.sortType : "";
         var sortWhere = "";
@@ -40,7 +39,8 @@ var page = {
                     if (tables[2]) {//第三个表
                         LEFT2 = " LEFT JOIN " + tables[2] + " ON " + where.left2 + " ";
                     }
-                    sql_1 = "SELECT " + fields + " FROM " + tables[0] + " " + LEFT1 + LEFT2 +
+                    var FREE_LEFT = tables[3] ? where.left_moer : ""
+                    sql_1 = "SELECT " + fields + " FROM " + tables[0] + " " + LEFT1 + LEFT2 + FREE_LEFT +
                         " WHERE " + where.where + " limit ?,?";
                 }
                 query(sql_1, [(pages - 1) * page, page], function (lists) {
