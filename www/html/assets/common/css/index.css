@@ -147,3 +147,62 @@
     font-size: 14px;
     margin-top: 5px;
 }
+
+.time-tip .cyc1 div {
+    display: inline-block;
+}
+
+.index-chart-title1,
+.index-chart-title2,
+.index-chart-title3 {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.index-chart-title1 img,
+.index-chart-title2 img,
+.index-chart-title3 img {
+    position: absolute;
+    left: 23px;
+    top: -2px;
+}
+
+.col-md-6.index-chart {
+    width: 48%;
+    margin: 15px 1% 10px 1%;
+    padding: 10px;
+    border: 1px solid #999;
+
+}
+
+.time-zhouqi li {
+    display: inline-block;
+    width: 40%;
+}
+
+.time-zhouqi li span,
+.time-zhouqi li i {
+    display: inline-block;
+}
+
+.time-zhouqi li i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 3px;
+}
+
+.t-u-b {
+    background-color: #028fd0;
+}
+
+.t-u-g {
+    background-color: #5cb85c;
+}
+
+.t-u-y {
+    background: #FF8C00;
+}

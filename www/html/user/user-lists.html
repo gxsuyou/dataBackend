@@ -64,6 +64,142 @@
         </div>
     </div>
     <!-- END MAIN CONTENT -->
+    <script>
+        $(function () {
+            var data = {
+                p: 1,
+            }
+            var url = config.data + "users/getUserList";
+            $.ajax({
+                type: "get",
+                url: url,
+                data: data,
+                timeout: 15000,
+                beforeSend: function (XMLHttpRequest) {
+                    //alert('远程调用开始...');
+                    // $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                    layer.load(2);
+                },
+                success: function (msg) {
+                    var users = msg.result;
+                    var html = ""
+                    for (var i in users) {
+                        var sortNum = Number(i) + 1;
+                        html += "<tr>";
+                        html += "<td>" + sortNum + "</td>";
+                        html += "<td>" + users[i].id + "</td>";
+                        html += "<td>" + users[i].only_id + "</td>";
+                        html += "<td>" + users[i].nick_name + "</td>";
+                        html += "<td>昵称：" + users[i].r_nick + "<br>电话：" + users[i].r_tel + "<br>编号ID：" + users[i].r_only + "</td>";
+                        if (users[i].sex == 1) {
+                            html += "<td>男</td>";
+                        } else if (users[i].sex == 2) {
+                            html += "<td>女</td>";
+                        } else {
+                            html += "<td>保密</td>";
+                        }
+                        html += "<td>" + users[i].tel + "</td>";
+                        // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
+                        html += "<td>注册：" + users[i].time_logon + "</td>";
+                        html += "<td><a data-url='user/user-recommon.html' class='user-action open-iframe' data-width='1050px' data-height='600px' onclick='openIframe(this)' data-nick='" + users[i].nick_name + "' data-uid='" + users[i].id + "'>推荐</a></td>";
+                        html += "</tr>";
+                    }
+                    html += "<input type='hidden' id='url' value='" + url + "'/>"
+                    $(".uLists").append(html);
+
+                    pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url);
+
+                    getPages()
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // alert('远程调用成功，状态文本值：'+textStatus);
+                    // $("#loading").empty();
+                    layer.closeAll('loading');
+                }
+            })
+
+            function getPages() {
+                $(".pages-div li").on("click", function () {
+
+                    var page = $(this).find("a").attr("data-num");
+                    $.ajax({
+                        type: "get",
+                        url: url,
+                        data: {p: page},
+                        timeout: 15000,
+                        beforeSend: function (XMLHttpRequest) {
+                            // //alert('远程调用开始...');
+                            // $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                            layer.load(2);
+                        },
+                        success: function (msg) {
+                            var users = msg.result;
+                            var html = ""
+                            for (var i in users) {
+                                var sortNum = Number(i) + 1;
+                                html += "<tr>";
+                                html += "<td>" + sortNum + "</td>";
+                                html += "<td>" + users[i].id + "</td>";
+                                html += "<td>" + users[i].only_id + "</td>";
+                                html += "<td>" + users[i].nick_name + "</td>";
+                                html += "<td>昵称：" + users[i].r_nick + "<br>电话：" + users[i].r_tel + "<br>编号ID：" + users[i].r_only + "</td>";
+                                if (users[i].sex == 1) {
+                                    html += "<td>男</td>";
+                                } else if (users[i].sex == 2) {
+                                    html += "<td>女</td>";
+                                } else {
+                                    html += "<td>保密</td>";
+                                }
+                                html += "<td>" + users[i].tel + "</td>";
+                                // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
+                                html += "<td>注册：" + users[i].time_logon + "</td>";
+                                html += "<td><a data-url='user/user-recommon.html' class='user-action open-iframe' data-width='1050px' data-height='600px' onclick='openIframe(this)' data-nick='" + users[i].nick_name + "' data-uid='" + users[i].id + "'>推荐</a></td>";
+                                html += "</tr>";
+                            }
+                            html += "<input type='hidden' id='url' value='" + url + "'/>"
+                            $(".uLists").empty()
+                            $(".uLists").append(html)
+
+                            pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url);
+
+                            getPages()
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {
+                            layer.closeAll('loading');
+                            // alert('远程调用成功，状态文本值：'+textStatus);
+                            // $("#loading").empty();
+                        }
+                    })
+                })
+            }
+        })
+    </script>
+    <script>
+        function openIframe(obj) {
+            var width = $(obj).attr("data-width");
+            var height = $(obj).attr("data-height");
+            var url = $(obj).attr("data-url");
+            var nick = $(obj).attr("data-nick");
+            var id = $(obj).attr("data-uid");
+            $("#uid").val(id)
+            layer.open({
+                type: 2,
+                title: "[" + nick + ']的推荐',
+                shadeClose: true,
+                shade: 0.7,
+                maxmin: true, //开启最大化最小化按钮
+                area: [width, height],
+                content: "./" + url,
+                success: function (layero, index) {
+                    //注意这里的#sid是iframe页面中的一个标签id
+                    var jquerySendHelloButton = $("#uid", layero.find("iframe")[0].contentWindow.document);
+                    console.log(id)
+                    jquerySendHelloButton.attr("value", id);
+
+                },
+            });
+        }
+    </script>
 </div>
 <!-- END MAIN -->
 <div class="clearfix"></div>
@@ -79,142 +215,6 @@
 <!-- END WRAPPER -->
 <!-- Javascript -->
 <!--<script type="application/javascript" src="./assets/common/js/user-lists.js"></script>-->
-<script>
-    $(function () {
-        var data = {
-            p: 1,
-        }
-        var url = config.data + "users/getUserList";
-        $.ajax({
-            type: "get",
-            url: url,
-            data: data,
-            timeout: 15000,
-            beforeSend: function (XMLHttpRequest) {
-                //alert('远程调用开始...');
-                // $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                layer.load(2);
-            },
-            success: function (msg) {
-                var users = msg.result;
-                var html = ""
-                for (var i in users) {
-                    var sortNum = Number(i) + 1;
-                    html += "<tr>";
-                    html += "<td>" + sortNum + "</td>";
-                    html += "<td>" + users[i].id + "</td>";
-                    html += "<td>" + users[i].only_id + "</td>";
-                    html += "<td>" + users[i].nick_name + "</td>";
-                    html += "<td>昵称：" + users[i].r_nick + "<br>电话：" + users[i].r_tel + "<br>编号ID：" + users[i].r_only + "</td>";
-                    if (users[i].sex == 1) {
-                        html += "<td>男</td>";
-                    } else if (users[i].sex == 2) {
-                        html += "<td>女</td>";
-                    } else {
-                        html += "<td>保密</td>";
-                    }
-                    html += "<td>" + users[i].tel + "</td>";
-                    // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
-                    html += "<td>注册：" + users[i].time_logon + "</td>";
-                    html += "<td><a data-url='user/user-recommon.html' class='user-action open-iframe' data-width='1050px' data-height='600px' onclick='openIframe(this)' data-nick='" + users[i].nick_name + "' data-uid='" + users[i].id + "'>推荐</a></td>";
-                    html += "</tr>";
-                }
-                html += "<input type='hidden' id='url' value='" + url + "'/>"
-                $(".uLists").append(html);
-
-                pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url);
-
-                getPages()
-            },
-            complete: function (XMLHttpRequest, textStatus) {
-                // alert('远程调用成功，状态文本值：'+textStatus);
-                // $("#loading").empty();
-                layer.closeAll('loading');
-            }
-        })
-
-        function getPages() {
-            $(".pages-div li").on("click", function () {
-
-                var page = $(this).find("a").attr("data-num");
-                $.ajax({
-                    type: "get",
-                    url: url,
-                    data: {p: page},
-                    timeout: 15000,
-                    beforeSend: function (XMLHttpRequest) {
-                        // //alert('远程调用开始...');
-                        // $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                        layer.load(2);
-                    },
-                    success: function (msg) {
-                        var users = msg.result;
-                        var html = ""
-                        for (var i in users) {
-                            var sortNum = Number(i) + 1;
-                            html += "<tr>";
-                            html += "<td>" + sortNum + "</td>";
-                            html += "<td>" + users[i].id + "</td>";
-                            html += "<td>" + users[i].only_id + "</td>";
-                            html += "<td>" + users[i].nick_name + "</td>";
-                            html += "<td>昵称：" + users[i].r_nick + "<br>电话：" + users[i].r_tel + "<br>编号ID：" + users[i].r_only + "</td>";
-                            if (users[i].sex == 1) {
-                                html += "<td>男</td>";
-                            } else if (users[i].sex == 2) {
-                                html += "<td>女</td>";
-                            } else {
-                                html += "<td>保密</td>";
-                            }
-                            html += "<td>" + users[i].tel + "</td>";
-                            // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
-                            html += "<td>注册：" + users[i].time_logon + "</td>";
-                            html += "<td><a data-url='user/user-recommon.html' class='user-action open-iframe' data-width='1050px' data-height='600px' onclick='openIframe(this)' data-nick='" + users[i].nick_name + "' data-uid='" + users[i].id + "'>推荐</a></td>";
-                            html += "</tr>";
-                        }
-                        html += "<input type='hidden' id='url' value='" + url + "'/>"
-                        $(".uLists").empty()
-                        $(".uLists").append(html)
-
-                        pages(msg.totalPage, msg.max_page, msg.firstPage, msg.nextPage, msg.prevPage, msg.nowPage, url);
-
-                        getPages()
-                    },
-                    complete: function (XMLHttpRequest, textStatus) {
-                        layer.closeAll('loading');
-                        // alert('远程调用成功，状态文本值：'+textStatus);
-                        // $("#loading").empty();
-                    }
-                })
-            })
-        }
-    })
-</script>
-<script>
-    function openIframe(obj) {
-        var width = $(obj).attr("data-width");
-        var height = $(obj).attr("data-height");
-        var url = $(obj).attr("data-url");
-        var nick = $(obj).attr("data-nick");
-        var id = $(obj).attr("data-uid");
-        $("#uid").val(id)
-        layer.open({
-            type: 2,
-            title: "[" + nick + ']的推荐',
-            shadeClose: true,
-            shade: 0.7,
-            maxmin: true, //开启最大化最小化按钮
-            area: [width, height],
-            content: "./" + url,
-            success: function (layero, index) {
-                //注意这里的#sid是iframe页面中的一个标签id
-                var jquerySendHelloButton = $("#uid", layero.find("iframe")[0].contentWindow.document);
-                console.log(id)
-                jquerySendHelloButton.attr("value", id);
-
-            },
-        });
-    }
-</script>
 </body>
 
 </html>

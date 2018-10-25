@@ -6,7 +6,7 @@ var md5 = require('../DAO/common')
 var user = {
     // 获取APP用户
     getUserList: function (callback) {
-        var sql = "select *,FROM_UNIXTIME(time_logon,'%Y-%m-%d') as time_logon from t_user order by time_logon desc";
+        var sql = "select id,FROM_UNIXTIME(time_logon,'%Y-%m-%d') as time_logon from t_user order by time_logon desc";
         query(sql, [], function (result) {
             return callback(result);
         })
@@ -31,19 +31,6 @@ var user = {
     getActivityNum: function (obj, callback) {
         var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log WHERE type=?";
         query(sql, [obj.type], function (result) {
-            return callback(result);
-        })
-    },
-    getActivityNum2: function (obj, callback) {
-        var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log";
-        query(sql, [obj.type], function (result) {
-            return callback(result);
-        })
-    },
-    // 获取下载数量
-    getDownNum: function (callback) {
-        var sql = "SELECT FROM_UNIXTIME(start_time,'%Y-%m-%d') AS start_time FROM t_all_activity_log WHERE type=1";
-        query(sql, [], function (result) {
             return callback(result);
         })
     },

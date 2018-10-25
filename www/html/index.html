@@ -1,6 +1,20 @@
 <!-- MAIN -->
 <div class="main">
     <style>
+        #headline-chart2 .ct-series-a .ct-point,
+        #headline-chart2 .ct-series-a .ct-line,
+        #headline-chart2 .ct-series-a .ct-bar,
+        #headline-chart2 .ct-series-a .ct-slice-donut {
+            stroke: #5cb85c !important;
+        }
+
+        #headline-chart3 .ct-series-a .ct-point,
+        #headline-chart3 .ct-series-a .ct-line,
+        #headline-chart3 .ct-series-a .ct-bar,
+        #headline-chart3 .ct-series-a .ct-slice-donut {
+            stroke: #FF8C00 !important;
+        }
+
         .ct-series-b .ct-point, .ct-series-b .ct-line, .ct-series-b .ct-bar, .ct-series-b .ct-slice-donut {
             stroke: #5cb85c;
         }
@@ -20,13 +34,6 @@
             top: 2px;
         }
 
-        .t-u-b {
-            background-color: #028fd0;
-        }
-
-        .t-u-g {
-            background-color: #5cb85c;
-        }
     </style>
     <link rel="stylesheet" href="./assets/common/css/index.css">
     <!-- MAIN CONTENT -->
@@ -103,6 +110,8 @@
                                 <input type="hidden" value="1" class="time-sort">
                                 <div class="time-btn-checked"><a href="javascript:void(0)">查询</a></div>
                                 <div class="time-btn-reset"><a href="javascript:void(0)">重置</a></div>
+                                <img class="time-tip-img" data-type="1" src="./assets/common/img/th.png" alt=""
+                                     style="width: 22px">
 
                                 <div class="time-right">
                                     <button type="button" class="time-btn-toggle">
@@ -115,61 +124,100 @@
                                 <div class="time-y-list"></div>
                                 <div class="time-m-list"></div>
                             </div>
+                            <div class="time-zhouqi">
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <span class="time-title1">第一周期：</span>
+                                            <i class="t-u-b"></i>
+                                            <span class="t_z_user t-1-user1">0</span>
+                                            <i class="t-u-g"></i>
+                                            <span class="t_z_user t-1-user2">0</span>
+                                            <i class="t-u-y"></i>
+                                            <span class="t_z_user t-1-user3">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="time-title1">第二周期：</span>
+                                            <i class="t-u-b"></i>
+                                            <span class="t_z_user t-2-user1">0</span>
+                                            <i class="t-u-g"></i>
+                                            <span class="t_z_user t-2-user2">0</span>
+                                            <i class="t-u-y"></i>
+                                            <span class="t_z_user t-2-user3">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="time-title1">第三周期：</span>
+                                            <i class="t-u-b"></i>
+                                            <span class="t_z_user t-3-user1">0</span>
+                                            <i class="t-u-g"></i>
+                                            <span class="t_z_user t-3-user2">0</span>
+                                            <i class="t-u-y"></i>
+                                            <span class="t_z_user t-3-user3">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="time-title1">第四周期：</span>
+                                            <i class="t-u-b"></i>
+                                            <span class="t_z_user t-4-user1">0</span>
+                                            <i class="t-u-g"></i>
+                                            <span class="t_z_user t-4-user2">0</span>
+                                            <i class="t-u-y"></i>
+                                            <span class="t_z_user t-4-user3">0</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row ">
-                        <div class="col-md-9 index-chart" style="position: relative">
-                            <div id="headline-chart" class="ct-chart" style="height: 305px;"></div>
+                        <div class="col-md-6 index-chart" style="position: relative;">
+                            <div class="index-chart-title1">
+                                <!--<img class="time-tip-img1" data-type="1" src="./assets/common/img/th.png" alt=""-->
+                                <!--style="width: 22px">-->
+                                <span>注册量</span>
+                            </div>
+                            <div id="headline-chart" class="ct-chart" style="height: 255px;"></div>
                             <div id="loading"
                                  style="width: 98%; position: absolute; text-align: center; top: 30%"></div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="weekly-summary text-right" style="margin-bottom: 15px">
-                                <span class="number user_reg"></span>
-                                <span class="info-label">新用户数</span>
+                        <div class="col-md-6 index-chart" style="position: relative">
+                            <div class="index-chart-title2">
+                                <!--<img class="time-tip-img2" data-type="2" src="./assets/common/img/th.png" alt=""-->
+                                <!--style="width: 22px">-->
+                                <span>活跃量</span>
                             </div>
-                            <div class="weekly-summary text-right">
-                                <span class="number user_log"></span>
-                                <span class="info-label">用户活跃量</span>
-                            </div>
-                            <div class="weekly-summary text-right" style="margin-bottom: 0">
-                                <span class="info-label">每周新人/活跃量</span>
-                            </div>
-                            <div class="weekly-summary text-right">
-                                <div class="info-label">
-                                    <span class="time-title1">第一周期（人）：</span>
-                                    <i class="t-u-b"></i>
-                                    <span class="t_z_user t-1-user1">0</span>
-                                    <i class="t-u-g"></i>
-                                    <span class="t_z_user t-1-user2">0</span>
-                                </div>
-                                <div class="info-label">
-                                    <span class="time-title2">第二周期（人）：</span>
-                                    <i class="t-u-b"></i>
-                                    <span class="t_z_user t-2-user1">0</span>
-                                    <i class="t-u-g"></i>
-                                    <span class="t_z_user t-2-user2">0</span>
-                                </div>
-                                <div class="info-label">
-                                    <span class="time-title3">第三周期（人）：</span>
-                                    <i class="t-u-b"></i>
-                                    <span class="t_z_user t-3-user1">0</span>
-                                    <i class="t-u-g"></i>
-                                    <span class="t_z_user t-3-user2">0</span>
-                                </div>
-                                <div class="info-label">
-                                    <span class="time-title4">第四周期（人）：</span>
-                                    <i class="t-u-b"></i>
-                                    <span class="t_z_user t-4-user1">0</span>
-                                    <i class="t-u-g"></i>
-                                    <span class="t_z_user t-4-user2">0</span>
-                                </div>
-                                <div class="info-label">
-                                    <img class="time-tip-img" src="./assets/common/img/th.png" alt=""
-                                         style="width: 22px">
-                                </div>
-                            </div>
+                            <div id="headline-chart2" class="ct-chart" style="height: 255px;"></div>
+                            <div id="loading2"
+                                 style="width: 98%; position: absolute; text-align: center; top: 30%"></div>
                         </div>
+                        <div class="col-md-6 index-chart" style="position: relative">
+                            <div class="index-chart-title3">
+                                <!--<img class="time-tip-img3" data-type="3" src="./assets/common/img/th.png" alt=""-->
+                                <!--style="width: 22px">-->
+                                <span>下载量</span>
+                            </div>
+                            <div id="headline-chart3" class="ct-chart" style="height: 255px;"></div>
+                            <div id="loading3"
+                                 style="width: 98%; position: absolute; text-align: center; top: 30%"></div>
+                        </div>
+                        <!--<div class="col-md-3" style="display: none">-->
+                        <!--<div class="weekly-summary text-right" style="margin-bottom: 15px">-->
+                        <!--<span class="number user_reg"></span>-->
+                        <!--<span class="info-label">新用户数</span>-->
+                        <!--</div>-->
+                        <!--<div class="weekly-summary text-right">-->
+                        <!--<span class="number user_log"></span>-->
+                        <!--<span class="info-label">用户活跃量</span>-->
+                        <!--</div>-->
+                        <!--<div class="weekly-summary text-right" style="margin-bottom: 0">-->
+                        <!--<span class="info-label">每周新人/活跃量</span>-->
+                        <!--</div>-->
+                        <!--<div class="weekly-summary text-right">-->
+                        <!--&lt;!&ndash;<div class="info-label">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img class="time-tip-img" src="./assets/common/img/th.png" alt=""&ndash;&gt;-->
+                        <!--&lt;!&ndash;style="width: 22px">&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
@@ -222,6 +270,446 @@
             <!-- END OVERVIEW -->
         </div>
     </div>
+    <script>
+        $(function () {
+            var getYear = myDate.getFullYear();
+            var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
+            var years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028]
+            var month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+            //year
+            var div_y = "<ul>年份："
+            for (var i in years) {
+                var active = ""
+                if (years[i] == getYear) {
+                    active = "time-active"
+                }
+                div_y += "<li><a href='javascript:void(0)' data-year='" + years[i] + "' class='" + active + " y-" + years[i] + "'>" + years[i] + "</a></li>"
+            }
+            div_y += "<ul>"
+
+            //month
+            var div_m = "<ul>月份："
+            for (var i2 in month) {
+                var active = ""
+                if (month[i2] == getMonth) {
+                    active = "time-active"
+                }
+                div_m += "<li><a href='javascript:void(0)' data-month='" + month[i2] + "' class='" + active + " lock m-" + month[i2] + "'>" + month[i2] + "</a></li>"
+            }
+            div_m += "<ul>"
+
+            $(".time-y-list").append(div_y)
+            $(".time-m-list").append(div_m)
+
+            var c1 = "./assets/common/img/checked1.png";
+            var c2 = "./assets/common/img/checked2.png";
+            $(".icon-checkde").on("click", function () {
+                var check = $(this).find("input[type='checkbox']").is(':checked');
+                var icon_data = $(this).attr("data-time");
+                var ym = icon_data.substr(5)
+                if (!check) {
+                    $(this).find("img").attr("src", c2)
+                    $(this).find("input[type='checkbox']").prop("checked", 'true');
+                    // if (icon_data == "icon-m") {
+                    //     $(".icon-checkde").find("img").attr("src", c2)
+                    //     $(".icon-checkde").find("input[type='checkbox']").prop("checked", 'true');
+                    //     $(".time-y-list li a").removeClass("lock")
+                    //     $(".time-m-list li a").removeClass("lock")
+                    // }
+                    $(".time-sort").val(1)
+                    $(".time-" + ym + "-list li a").removeClass("lock")
+                } else {
+                    $(this).find("img").attr("src", c1)
+                    $(this).find("input[type='checkbox']").removeAttr("checked");
+                    // if (icon_data == "icon-y") {
+                    //     $(".icon-checkde").find("img").attr("src", c1)
+                    //     $(".icon-checkde").find("input[type='checkbox']").removeAttr("checked");
+                    //     $(".time-y-list li a").addClass("lock")
+                    //     $(".time-m-list li a").addClass("lock")
+                    // }
+                    $(".time-m-val").text("");
+                    $(".time-sort").val(2)
+                    $(".time-m-list li").find("a").removeClass("time-active")
+                    $(".time-" + ym + "-list li a").addClass("lock")
+                }
+            })
+
+            $(".time-tip-img").on("click", function () {
+                console.log(1)
+                layer.open({
+                    type: 1,
+                    area: ['500px', '90px'],
+                    shadeClose: true,
+                    shade: 0.7,
+                    title: false, //不显示标题
+                    content: $('.time-tip'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                });
+            })
+
+        })
+    </script>
+    <script>
+        $(function () {
+            var data, options;
+            var labels = [];
+            var day = getCountDays();
+            for (var i = 1; i <= day; i++) {
+                if (i > day) break;
+                labels.push(i)
+            }
+
+            startAjax();
+
+            function startAjax() {
+                var url = config.data + "users/getUserNum";
+                var getYear = myDate.getFullYear();
+                var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
+                var getDate = getYear + "-0" + getMonth;//yyyy-MM如：2018-08
+                if (getMonth > 9) {
+                    getDate = getYear + "-" + getMonth;
+                }
+                var count = {
+                    sort: 1,
+                    type: 2,
+                    last_time: getDate
+                };
+                var count2 = {
+                    sort: 1,
+                    type: 1,
+                    last_time: getDate
+                };
+
+                var startMonth = "0" + getMonth;
+                if (startMonth > 9) startMonth = getMonth;
+
+                $(".time-y-val").text(getYear);
+                $(".time-m-val").text(startMonth);
+
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    data: count,
+                    beforeSend: function (XMLHttpRequest) {
+                        //alert('远程调用开始...');
+                        $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                    },
+                    success: function (msg) {
+                        var arr = msg.userNum
+                        $(".number.user_register").text(msg.gnum)
+                        $(".number.user_reg_day").text(msg.toDayReg)
+                        $(".t-1-user1").text(msg.fnum);
+                        $(".t-2-user1").text(msg.snum);
+                        $(".t-3-user1").text(msg.tnum);
+                        $(".t-4-user1").text(msg.fournum);
+                        TrendMap(arr, 1, '#headline-chart', parseInt(getYear), parseInt(startMonth))
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // alert('远程调用成功，状态文本值：'+textStatus);
+                        $("#loading").empty();
+                    }
+                });
+
+                $.ajax({
+                    type: "get",
+                    url: config.data + "users/getActivityNum",
+                    data: count,
+                    beforeSend: function (XMLHttpRequest) {
+                        //alert('远程调用开始...');
+                        $("#loading2").html("<img src='./assets/common/img/loading.gif' />");
+                    },
+                    success: function (msg2) {
+                        var arr2 = msg2.arrNum
+                        $(".number.user_login").text(msg2.monthNum)
+                        $(".t-1-user2").text(msg2.oneNum);
+                        $(".t-2-user2").text(msg2.twoNum);
+                        $(".t-3-user2").text(msg2.triNum);
+                        $(".t-4-user2").text(msg2.fourNum);
+
+                        TrendMap(arr2, 1, '#headline-chart2', parseInt(getYear), parseInt(startMonth))
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // alert('远程调用成功，状态文本值：'+textStatus);
+                        $("#loading2").empty();
+                    }
+                })
+
+                $.ajax({
+                    type: "get",
+                    url: config.data + "users/getActivityNum",
+                    data: count2,
+                    beforeSend: function (XMLHttpRequest) {
+                        //alert('远程调用开始...');
+                        $("#loading3").html("<img src='./assets/common/img/loading.gif' />");
+                    },
+                    success: function (msg3) {
+                        var arr3 = msg3.arrNum;
+                        // $(".number.user_login").text(msg3.monthNum)
+                        $(".t-1-user3").text(msg3.oneNum);
+                        $(".t-2-user3").text(msg3.twoNum);
+                        $(".t-3-user3").text(msg3.triNum);
+                        $(".t-4-user3").text(msg3.fourNum);
+
+                        TrendMap(arr3, 1, '#headline-chart3', parseInt(getYear), parseInt(startMonth))
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // alert('远程调用成功，状态文本值：'+textStatus);
+                        $("#loading3").empty();
+                    }
+                })
+            }
+
+            var userUrl = config.data + "users/getUserList";
+            $.ajax({
+                type: "get",
+                url: userUrl,
+                data: {p: 1},
+                timeout: 15000,
+                beforeSend: function (XMLHttpRequest) {
+                    //alert('远程调用开始...');
+                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                },
+                success: function (msg) {
+                    $(".user-total").text(msg.totalUser)
+                    var users = msg.result;
+                    var html = ""
+                    for (var i in users) {
+                        var sortNum = Number(i) + 1;
+                        html += "<tr>";
+                        html += "<td>" + sortNum + "</td>";
+                        html += "<td>" + users[i].id + "</td>";
+                        html += "<td>" + users[i].nick_name + "</td>";
+                        if (users[i].sex == 1) {
+                            html += "<td>男</td>";
+                        } else if (users[i].sex == 2) {
+                            html += "<td>女</td>";
+                        } else {
+                            html += "<td>保密</td>";
+                        }
+                        html += "<td>" + users[i].tel + "</td>";
+                        // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
+                        html += "<td>注册：" + users[i].time_logon + "</td>";
+                        html += "<td>--/--</td>";
+                        html += "</tr>";
+                    }
+                    html += "<input type='hidden' id='url' value='" + userUrl + "'/>"
+                    $(".indexULists").append(html);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // alert('远程调用成功，状态文本值：'+textStatus);
+                    $("#loading").empty();
+                }
+            });
+
+            $(".time-y-list li").on("click", function () {
+                var this_year = $(this).find("a").attr("data-year")
+                $(".time-y-list li").find("a").removeClass("time-active")
+                $(this).find("a").addClass("time-active")
+
+                $(".time-y-val").text(this_year);
+            })
+            $(".time-m-list li").on("click", function () {
+                var isLock = $(".time-m-list li").find("a").is('.lock')
+                if (isLock) {
+                    layer.msg("当前月份不可选");
+                    return false;
+                }
+                var this_month = $(this).find("a").attr("data-month")
+                $(".time-m-list li").find("a").removeClass("time-active")
+                $(this).find("a").addClass("time-active")
+
+                $(".time-m-val").text(this_month);
+            })
+
+
+            $(".time-btn-checked a").on("click", function () {
+                var sort = $(".time-sort").val();
+                var year = $(".time-y-val").text();
+                var month = $(".time-m-val").text();
+                var dataTime = year + "-" + month
+                if (sort == 1) {
+                    if (!month) {
+                        layer.msg("请选择查看的月份");
+                        return false;
+                    }
+                } else {
+                    dataTime = year;
+                    if (month) {
+                        layer.msg("当前只查年度");
+                        return false
+                    }
+                }
+                var dataArr = {
+                    last_time: dataTime,
+                    type: 2,
+                    sort: sort
+                }
+                var dataArr2 = {
+                    last_time: dataTime,
+                    type: 1,
+                    sort: sort
+                }
+                $.ajax({
+                    type: "get",
+                    url: config.data + "users/getUserNum",
+                    data: dataArr,
+                    beforeSend: function (XMLHttpRequest) {
+                        //alert('远程调用开始...');
+                        $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                    },
+                    success: function (msg) {
+                        var arr = msg.userNum
+                        $(".number.user_register").text(msg.gnum)
+                        $(".t-1-user1").text(msg.fnum);
+                        $(".t-2-user1").text(msg.snum);
+                        $(".t-3-user1").text(msg.tnum);
+                        $(".t-4-user1").text(msg.fournum);
+                        if (sort == 2) {
+                            TrendMap(arr, sort, '#headline-chart')
+                        } else {
+                            TrendMap(arr, sort, '#headline-chart', parseInt(year), parseInt(month))
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // alert('远程调用成功，状态文本值：'+textStatus);
+                        $("#loading").empty();
+                    }
+                });
+
+                $.ajax({
+                    type: "get",
+                    url: config.data + "users/getActivityNum",
+                    data: dataArr,
+                    beforeSend: function (XMLHttpRequest) {
+                        //alert('远程调用开始...');
+                        $("#loading2").html("<img src='./assets/common/img/loading.gif' />");
+                    },
+                    success: function (msg2) {
+                        var arr2 = msg2.arrNum
+                        $(".number.user_login").text(msg2.monthNum)
+                        $(".t-1-user2").text(msg2.oneNum);
+                        $(".t-2-user2").text(msg2.twoNum);
+                        $(".t-3-user2").text(msg2.triNum);
+                        $(".t-4-user2").text(msg2.fourNum);
+                        if (sort == 2) {
+                            TrendMap(arr2, sort, '#headline-chart2')
+                        } else {
+                            TrendMap(arr2, sort, '#headline-chart2', parseInt(year), parseInt(month))
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // alert('远程调用成功，状态文本值：'+textStatus);
+                        $("#loading2").empty();
+                    }
+
+                })
+
+                $.ajax({
+                    type: "get",
+                    url: config.data + "users/getActivityNum",
+                    data: dataArr2,
+                    beforeSend: function (XMLHttpRequest) {
+                        //alert('远程调用开始...');
+                        $("#loading3").html("<img src='./assets/common/img/loading.gif' />");
+                    },
+                    success: function (msg3) {
+                        var arr3 = msg3.arrNum
+                        $(".t-1-user3").text(msg3.oneNum);
+                        $(".t-2-user3").text(msg3.twoNum);
+                        $(".t-3-user3").text(msg3.triNum);
+                        $(".t-4-user3").text(msg3.fourNum);
+
+                        if (sort == 2) {
+                            TrendMap(arr3, sort, '#headline-chart3')
+                        } else {
+                            TrendMap(arr3, sort, '#headline-chart3', parseInt(year), parseInt(month))
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        // alert('远程调用成功，状态文本值：'+textStatus);
+                        $("#loading3").empty();
+                    }
+                })
+
+            })
+
+            function TrendMap(arr, sort, element, year = 0, momth = 0) {
+                var labels = []
+                if (sort == 2) {
+                    labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+                } else {
+                    var day = getCountDays(year, momth);
+                    for (var i = 1; i <= day; i++) {
+                        if (i > day) break;
+                        labels.push(i)
+                    }
+                }
+                data = {
+                    labels: labels,
+                    series: [
+                        arr,
+                    ]
+                };
+
+                options = {
+                    height: 250,
+                    // showArea: true,
+                    // showLine: false,
+                    // showPoint: false,
+                    fullWidth: true,
+                    axisX: {
+                        showGrid: false
+                    },
+                    lineSmooth: true,
+                };
+
+                new Chartist.Line(element, data, options);
+            }
+
+            $(".more-users").click(function () {
+                $(".nav li").find("a").removeClass("active");
+                $(".users").addClass("active");
+                var href = $(".users").attr("data-href");
+                $.ajax({
+                    url: "./" + href,
+                    type: "GET",
+                    dataType: "html",
+                    success: function (result) {
+                        $("#wrapper .main").remove();
+                        $("#wrapper").append(result);
+                        // alert($("#sidebar-nav").html())
+                    }
+                });
+            })
+            $(".time-btn-reset").click(function () {
+                var getYear = myDate.getFullYear();
+                var getMonth = Number(myDate.getMonth()) + 1;
+                var c1 = "./assets/common/img/checked1.png";
+
+                $(".time-m-list li a").addClass("lock")
+                $(".time-y-list li a").removeClass("time-active")
+                $(".time-m-list li a").removeClass("time-active")
+
+                $(".time-y-list li a.y-" + getYear).addClass("time-active")
+                $(".time-m-list li a.m-0" + getMonth).addClass("time-active")
+                $(".time-y-val").text(getYear)
+                var reMonth = "0" + getMonth;
+                if (getMonth > 9) reMonth = getMonth;
+                $(".time-m-val").text(reMonth)
+
+                $(".icon-checkde img").attr("src", c1)
+                $(".icon-checkde input[type=checkbox]").removeAttr("checked")
+                $(".time-sort").val(1);
+
+                startAjax()
+            })
+        });
+    </script>
+    <div class="time-tip" style="display: none">
+        <ul>
+            <li>1、查询月份周期时间为每七天一周期，最后一周为22号到月末</li>
+            <li>2、查询年份周期时间为每三个月（一个季度）一周期</li>
+        </ul>
+    </div>
 </div>
 <!-- END MAIN CONTENT -->
 </div>
@@ -231,429 +719,9 @@
     <div class="container-fluid">
     </div>
 </footer>
-<script>
-    $(function () {
-        var getYear = myDate.getFullYear();
-        var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
-        var years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028]
-        var month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
-        //year
-        var div_y = "<ul>年份："
-        for (var i in years) {
-            var active = ""
-            if (years[i] == getYear) {
-                active = "time-active"
-            }
-            div_y += "<li><a href='javascript:void(0)' data-year='" + years[i] + "' class='" + active + " y-" + years[i] + "'>" + years[i] + "</a></li>"
-        }
-        div_y += "<ul>"
 
-        //month
-        var div_m = "<ul>月份："
-        for (var i2 in month) {
-            var active = ""
-            if (month[i2] == getMonth) {
-                active = "time-active"
-            }
-            div_m += "<li><a href='javascript:void(0)' data-month='" + month[i2] + "' class='" + active + " lock m-" + month[i2] + "'>" + month[i2] + "</a></li>"
-        }
-        div_m += "<ul>"
-
-        $(".time-y-list").append(div_y)
-        $(".time-m-list").append(div_m)
-
-        var c1 = "./assets/common/img/checked1.png";
-        var c2 = "./assets/common/img/checked2.png";
-        $(".icon-checkde").on("click", function () {
-            var check = $(this).find("input[type='checkbox']").is(':checked');
-            var icon_data = $(this).attr("data-time");
-            var ym = icon_data.substr(5)
-            if (!check) {
-                $(this).find("img").attr("src", c2)
-                $(this).find("input[type='checkbox']").prop("checked", 'true');
-                // if (icon_data == "icon-m") {
-                //     $(".icon-checkde").find("img").attr("src", c2)
-                //     $(".icon-checkde").find("input[type='checkbox']").prop("checked", 'true');
-                //     $(".time-y-list li a").removeClass("lock")
-                //     $(".time-m-list li a").removeClass("lock")
-                // }
-                $(".time-sort").val(1)
-                $(".time-" + ym + "-list li a").removeClass("lock")
-            } else {
-                $(this).find("img").attr("src", c1)
-                $(this).find("input[type='checkbox']").removeAttr("checked");
-                // if (icon_data == "icon-y") {
-                //     $(".icon-checkde").find("img").attr("src", c1)
-                //     $(".icon-checkde").find("input[type='checkbox']").removeAttr("checked");
-                //     $(".time-y-list li a").addClass("lock")
-                //     $(".time-m-list li a").addClass("lock")
-                // }
-                $(".time-m-val").text("");
-                $(".time-sort").val(2)
-                $(".time-m-list li").find("a").removeClass("time-active")
-                $(".time-" + ym + "-list li a").addClass("lock")
-            }
-        })
-
-        $(".time-tip-img").on("click", function () {
-            layer.open({
-                type: 1,
-                area: ['500px', '90px'],
-                shade: false,
-                title: false, //不显示标题
-                content: $('.time-tip'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-            });
-        })
-
-    })
-</script>
-<script>
-    $(function () {
-        var data, options;
-        var labels = [];
-        var day = getCountDays();
-        for (var i = 1; i <= day; i++) {
-            if (i > day) break;
-            labels.push(i)
-        }
-
-        startAjax();
-
-        function startAjax() {
-            var url = config.data + "users/getUserNum";
-            var getYear = myDate.getFullYear();
-            var getMonth = Number(myDate.getMonth()) + 1;//因为从0开始，所以要+1
-            var getDate = getYear + "-0" + getMonth;//yyyy-MM如：2018-08
-            if (getMonth > 9) {
-                getDate = getYear + "-" + getMonth;
-            }
-            var count = {
-                sort: 1,
-                type: 2,
-                last_time: getDate
-            };
-            var count2 = {
-                sort: 1,
-                type: 1,
-                last_time: getDate
-            };
-
-            var startMonth = "0" + getMonth;
-            if (startMonth > 9) startMonth = getMonth;
-
-            $(".time-y-val").text(getYear);
-            $(".time-m-val").text(startMonth);
-
-            $.ajax({
-                type: "get",
-                url: url,
-                data: count,
-                success: function (msg) {
-                    $(".number.user_register").text(msg.gnum)
-                    $(".number.user_reg_day").text(msg.toDayReg)
-                    $(".t-1-user1").text(msg.fnum);
-                    $(".t-2-user1").text(msg.snum);
-                    $(".t-3-user1").text(msg.tnum);
-                    $(".t-4-user1").text(msg.fournum);
-                    var arr = msg.userNum
-                    $.ajax({
-                        type: "get",
-                        url: config.data + "users/getActivityNum",
-                        data: count,
-                        success: function (msg2) {
-                            var arr2 = msg2.arrNum
-                            $(".number.user_login").text(msg2.monthNum)
-                            $(".t-1-user2").text(msg2.oneNum);
-                            $(".t-2-user2").text(msg2.twoNum);
-                            $(".t-3-user2").text(msg2.triNum);
-                            $(".t-4-user2").text(msg2.fourNum);
-
-                            $.ajax({
-                                type: "get",
-                                url: config.data + "users/getActivityNum",
-                                data: count2,
-                                beforeSend: function (XMLHttpRequest) {
-                                    //alert('远程调用开始...');
-                                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                                },
-                                success: function (msg3) {
-                                    var arr3 = msg3.arrNum;
-                                    data = {
-                                        labels: labels,
-                                        series: [
-                                            arr,
-                                            arr2,
-                                            arr3,
-                                        ]
-                                    };
-
-                                    options = {
-                                        height: 300,
-                                        // showArea: true,
-                                        // showLine: false,
-                                        // showPoint: false,
-                                        fullWidth: true,
-                                        axisX: {
-                                            showGrid: false
-                                        },
-                                        lineSmooth: true,
-                                    };
-
-                                    new Chartist.Line('#headline-chart', data, options);
-                                },
-                                complete: function (XMLHttpRequest, textStatus) {
-                                    // alert('远程调用成功，状态文本值：'+textStatus);
-                                    $("#loading").empty();
-                                }
-                            })
-                        },
-                    })
-                },
-            });
-        }
-
-        var userUrl = config.data + "users/getUserList";
-        $.ajax({
-            type: "get",
-            url: userUrl,
-            data: {p: 1},
-            timeout: 15000,
-            beforeSend: function (XMLHttpRequest) {
-                //alert('远程调用开始...');
-                $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-            },
-            success: function (msg) {
-                $(".user-total").text(msg.totalUser)
-                var users = msg.result;
-                var html = ""
-                for (var i in users) {
-                    var sortNum = Number(i) + 1;
-                    html += "<tr>";
-                    html += "<td>" + sortNum + "</td>";
-                    html += "<td>" + users[i].id + "</td>";
-                    html += "<td>" + users[i].nick_name + "</td>";
-                    if (users[i].sex == 1) {
-                        html += "<td>男</td>";
-                    } else if (users[i].sex == 2) {
-                        html += "<td>女</td>";
-                    } else {
-                        html += "<td>保密</td>";
-                    }
-                    html += "<td>" + users[i].tel + "</td>";
-                    // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
-                    html += "<td>注册：" + users[i].time_logon + "</td>";
-                    html += "<td>--/--</td>";
-                    html += "</tr>";
-                }
-                html += "<input type='hidden' id='url' value='" + userUrl + "'/>"
-                $(".indexULists").append(html);
-            },
-            complete: function (XMLHttpRequest, textStatus) {
-                // alert('远程调用成功，状态文本值：'+textStatus);
-                $("#loading").empty();
-            }
-        });
-
-        $(".time-y-list li").on("click", function () {
-            var this_year = $(this).find("a").attr("data-year")
-            $(".time-y-list li").find("a").removeClass("time-active")
-            $(this).find("a").addClass("time-active")
-
-            $(".time-y-val").text(this_year);
-        })
-        $(".time-m-list li").on("click", function () {
-            var isLock = $(".time-m-list li").find("a").is('.lock')
-            if (isLock) {
-                layer.msg("当前月份不可选");
-                return false;
-            }
-            var this_month = $(this).find("a").attr("data-month")
-            $(".time-m-list li").find("a").removeClass("time-active")
-            $(this).find("a").addClass("time-active")
-
-            $(".time-m-val").text(this_month);
-        })
-
-
-        $(".time-btn-checked a").on("click", function () {
-            var sort = $(".time-sort").val();
-            var year = $(".time-y-val").text();
-            var month = $(".time-m-val").text();
-            var dataTime = year + "-" + month
-            if (sort == 1) {
-                if (!month) {
-                    layer.msg("请选择查看的月份");
-                    return false;
-                }
-            } else {
-                dataTime = year;
-                if (month) {
-                    layer.msg("当前只查年度");
-                    return false
-                }
-            }
-            var dataArr = {
-                last_time: dataTime,
-                type: 2,
-                sort: sort
-            }
-            var dataArr2 = {
-                last_time: dataTime,
-                type: 1,
-                sort: sort
-            }
-            $.ajax({
-                type: "get",
-                url: config.data + "users/getUserNum",
-                data: dataArr,
-                beforeSend: function (XMLHttpRequest) {
-                    //alert('远程调用开始...');
-                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                },
-                success: function (msg) {
-                    var arr = msg.userNum
-                    $(".number.user_register").text(msg.gnum)
-                    $(".t-1-user1").text(msg.fnum);
-                    $(".t-2-user1").text(msg.snum);
-                    $(".t-3-user1").text(msg.tnum);
-                    $(".t-4-user1").text(msg.fournum);
-                    $.ajax({
-                        type: "get",
-                        url: config.data + "users/getActivityNum",
-                        data: dataArr,
-                        beforeSend: function (XMLHttpRequest) {
-                            //alert('远程调用开始...');
-                            $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                        },
-                        success: function (msg2) {
-                            var arr2 = msg2.arrNum
-                            $(".number.user_login").text(msg2.monthNum)
-                            $(".t-1-user2").text(msg2.oneNum);
-                            $(".t-2-user2").text(msg2.twoNum);
-                            $(".t-3-user2").text(msg2.triNum);
-                            $(".t-4-user2").text(msg2.fourNum);
-                            $.ajax({
-                                type: "get",
-                                url: config.data + "users/getActivityNum",
-                                data: dataArr2,
-                                beforeSend: function (XMLHttpRequest) {
-                                    //alert('远程调用开始...');
-                                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
-                                },
-                                success: function (msg3) {
-                                    var arr3 = msg3.arrNum
-                                    if (sort == 2) {
-                                        TrendMap(arr, arr2, arr3, sort)
-                                    } else {
-                                        TrendMap(arr, arr2, arr3, sort, parseInt(year), parseInt(month))
-                                    }
-                                },
-                                complete: function (XMLHttpRequest, textStatus) {
-                                    // alert('远程调用成功，状态文本值：'+textStatus);
-                                    $("#loading").empty();
-                                }
-                            })
-                        },
-                        complete: function (XMLHttpRequest, textStatus) {
-                            // alert('远程调用成功，状态文本值：'+textStatus);
-                            $("#loading").empty();
-                        }
-
-                    })
-                },
-                complete: function (XMLHttpRequest, textStatus) {
-                    // alert('远程调用成功，状态文本值：'+textStatus);
-                    $("#loading").empty();
-                }
-            })
-
-        })
-
-        function TrendMap(arr, arr2, arr3, sort, year = 0, momth = 0) {
-            var labels = []
-            if (sort == 2) {
-                // $("span.time-title1").text("第一季度（人）");
-                // $("span.time-title2").text("第二季度（人）");
-                // $("span.time-title3").text("第三季度（人）");
-                // $("span.time-title4").text("第四季度（人）");
-                labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-            } else {
-                var day = getCountDays(year, momth);
-                for (var i = 1; i <= day; i++) {
-                    if (i > day) break;
-                    labels.push(i)
-                }
-            }
-            data = {
-                labels: labels,
-                series: [
-                    arr,
-                    arr2,
-                    arr3
-                ]
-            };
-
-            options = {
-                height: 300,
-                // showArea: true,
-                // showLine: false,
-                // showPoint: false,
-                fullWidth: true,
-                axisX: {
-                    showGrid: false
-                },
-                lineSmooth: true,
-            };
-
-            new Chartist.Line('#headline-chart', data, options);
-        }
-
-        $(".more-users").click(function () {
-            $(".nav li").find("a").removeClass("active");
-            $(".users").addClass("active");
-            var href = $(".users").attr("data-href");
-            $.ajax({
-                url: "./" + href,
-                type: "GET",
-                dataType: "html",
-                success: function (result) {
-                    $("#wrapper .main").remove();
-                    $("#wrapper").append(result);
-                    // alert($("#sidebar-nav").html())
-                }
-            });
-        })
-        $(".time-btn-reset").click(function () {
-            var getYear = myDate.getFullYear();
-            var getMonth = Number(myDate.getMonth()) + 1;
-            var c1 = "./assets/common/img/checked1.png";
-
-            $(".time-m-list li a").addClass("lock")
-            $(".time-y-list li a").removeClass("time-active")
-            $(".time-m-list li a").removeClass("time-active")
-
-            $(".time-y-list li a.y-" + getYear).addClass("time-active")
-            $(".time-m-list li a.m-0" + getMonth).addClass("time-active")
-            $(".time-y-val").text(getYear)
-            var reMonth = "0" + getMonth;
-            if (getMonth > 9) reMonth = getMonth;
-            $(".time-m-val").text(reMonth)
-
-            $(".icon-checkde img").attr("src", c1)
-            $(".icon-checkde input[type=checkbox]").removeAttr("checked")
-            $(".time-sort").val(1);
-
-            startAjax()
-        })
-    });
-</script>
 </div>
-<div class="time-tip">
-    <ul>
-        <li>1、查询月份周期时间为每七天一周期，最后一周为22号到月末</li>
-        <li>2、查询年份周期时间为每三个月（一个季度）一周期</li>
-    </ul>
-</div>
+
 
 <!-- END WRAPPER -->
 </body>
