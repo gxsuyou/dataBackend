@@ -221,6 +221,52 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6" style="width: 100%">
+                    <!-- RECENT PURCHASES -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">最近新增的用户</h3>
+                            <div class="right">
+                                <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i>
+                                </button>
+                                <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body no-padding">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>id</th>
+                                    <th>昵称</th>
+                                    <th>性别</th>
+                                    <th>联系电话</th>
+                                    <th>时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="indexULists">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="loading-users"
+                             style="width: 98%; position: absolute; text-align: center; top: 30%"></div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="panel-note"><i class="fa fa-clock-o"></i> 最新注册的10位用户</span>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href="javascript:void(0);" data-href="/user/user-lists.html"
+                                       class="btn btn-primary more-users">查看更多</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END RECENT PURCHASES -->
+                </div>
+            </div>
             <!-- END OVERVIEW -->
         </div>
     </div>
@@ -411,6 +457,48 @@
                     }
                 })
             }
+
+            var userUrl = config.data + "users/getUserList";
+            $.ajax({
+                type: "get",
+                url: userUrl,
+                data: {p: 1},
+                timeout: 15000,
+                beforeSend: function (XMLHttpRequest) {
+                    //alert('远程调用开始...');
+                    $("#loading").html("<img src='./assets/common/img/loading.gif' />");
+                },
+                success: function (msg) {
+                    $(".user-total").text(msg.totalUser)
+                    var users = msg.result;
+                    var html = ""
+                    for (var i in users) {
+                        var sortNum = Number(i) + 1;
+                        html += "<tr>";
+                        html += "<td>" + sortNum + "</td>";
+                        html += "<td>" + users[i].id + "</td>";
+                        html += "<td>" + users[i].nick_name + "</td>";
+                        if (users[i].sex == 1) {
+                            html += "<td>男</td>";
+                        } else if (users[i].sex == 2) {
+                            html += "<td>女</td>";
+                        } else {
+                            html += "<td>保密</td>";
+                        }
+                        html += "<td>" + users[i].tel + "</td>";
+                        // html += "<td>注册：" + users[i].time_logon + "<br>上次登录：" + users[i].login_time + "</td>";
+                        html += "<td>注册：" + users[i].time_logon + "</td>";
+                        html += "<td>--/--</td>";
+                        html += "</tr>";
+                    }
+                    html += "<input type='hidden' id='url' value='" + userUrl + "'/>"
+                    $(".indexULists").append(html);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    // alert('远程调用成功，状态文本值：'+textStatus);
+                    $("#loading").empty();
+                }
+            });
 
             $(".time-y-list li").on("click", function () {
                 var this_year = $(this).find("a").attr("data-year")
