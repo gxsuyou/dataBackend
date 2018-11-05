@@ -39,8 +39,8 @@ var page = {
                     if (tables[2]) {//第三个表
                         LEFT2 = " LEFT JOIN " + tables[2] + " ON " + where.left2 + " ";
                     }
-                    var FREE_LEFT = tables[3] ? where.left_moer : ""
-                    sql_1 = "SELECT " + fields + " FROM " + tables[0] + " " + LEFT1 + LEFT2 + FREE_LEFT +
+                    var LEFT_MOER = tables[3] ? where.left_moer : "";//超过三个关联表
+                    sql_1 = "SELECT " + fields + " FROM " + tables[0] + " " + LEFT1 + LEFT2 + LEFT_MOER +
                         " WHERE " + where.where + " limit ?,?";
                 }
                 query(sql_1, [(pages - 1) * page, page], function (lists) {
